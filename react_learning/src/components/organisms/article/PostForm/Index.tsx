@@ -1,48 +1,51 @@
-import React, { useReducer } from "react";
-import { useNavigate } from "react-router-dom";
-import { paths } from "../../../../utils/paths";
-import { Button } from "../../../atoms";
-import { LabelAndTextInput, LabelAndTextArea } from "../../../molecules";
-import { reducer } from "./modules/reducer";
-import type { InputForm, RequestBody } from "./modules/types";
+import React, { useReducer } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { paths } from '../../../../utils/paths';
+import { Button } from '../../../atoms';
+import { LabelAndTextInput, LabelAndTextArea } from '../../../molecules';
+import { reducer } from './modules/reducer';
+import type { InputForm, RequestBody } from './modules/types';
 
-
-export const requiredError = "必須入力です";
+export const requiredError = '必須入力です';
 export const initialState: InputForm = {
-    shouldShowError: false,
-    title: {
-        value: "",
-        errorMessage: requiredError,
-    },
-    description: {
-        value: "",
-        errorMessage: requiredError,
-    },
+  shouldShowError: false,
+  title: {
+    value: '',
+    errorMessage: requiredError,
+  },
+  description: {
+    value: '',
+    errorMessage: requiredError,
+  },
 };
 export const PostForm: React.FC = () => {
   const navigate = useNavigate();
   const [formState, dispatch] = useReducer(reducer, initialState);
 
-  const { shouldShowError,title, description } = formState;
+  const { shouldShowError, title, description } = formState;
 
   const clickPostButton = async () => {
-      if(!shouldShowError){
-          dispatch({
-              type:'showErrorMessage'
-          })
-      }
-      if(title.errorMessage !==undefined || description.errorMessage !== undefined) return;
+    if (!shouldShowError) {
+      dispatch({
+        type: 'showErrorMessage',
+      });
+    }
+    if (
+      title.errorMessage !== undefined ||
+      description.errorMessage !== undefined
+    )
+      return;
 
     const body: RequestBody = {
-      user_id: "hoge", // TODO ログイン機能仕込んだらuserId指定してあげてね
+      user_id: 'hoge', // TODO ログイン機能仕込んだらuserId指定してあげてね
       title: formState.title.value,
       content: formState.description.value,
     };
-    await fetch("http://localhost:8000/api/articles", {
+    await fetch('http://localhost:8000/api/articles', {
       body: JSON.stringify(body),
-      method: "POST",
+      method: 'POST',
       headers: {
-        "Content-Type": "application/json;charset=utf-8",
+        'Content-Type': 'application/json;charset=utf-8',
       },
     })
       .then((response) => {
@@ -51,7 +54,7 @@ export const PostForm: React.FC = () => {
         }
         //　TODO　エラーハンドリング理解してやってもらいたいので、書いていない
         //  よって一通りの画面実装が終わったら下記を修正してほしい
-        throw new Error("通信エラー");
+        throw new Error('通信エラー');
       })
       .then((result) => {
         navigate(paths.articles.detail(result.article_id));
@@ -70,9 +73,9 @@ export const PostForm: React.FC = () => {
           placeholder="タイトル"
           onChange={(value) => {
             dispatch({
-              type: "changeArticleTitle",
+              type: 'changeArticleTitle',
               payload: {
-                title: value,
+                title: 'title',
               },
             });
           }}
@@ -87,7 +90,7 @@ export const PostForm: React.FC = () => {
           placeholder=""
           onChange={(value) => {
             dispatch({
-              type: "changeArticleDescription",
+              type: 'changeArticleDescription',
               payload: {
                 description: value,
               },
@@ -98,10 +101,7 @@ export const PostForm: React.FC = () => {
       </div>
 
       <div className="w-3/12 float-right">
-        <Button
-          name="投稿する"
-          onClick={clickPostButton}
-        />
+        <Button name="投稿する" onClick={clickPostButton} />
       </div>
     </div>
   );
