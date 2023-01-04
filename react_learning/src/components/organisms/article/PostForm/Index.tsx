@@ -75,7 +75,7 @@ export const PostForm: React.FC = () => {
             dispatch({
               type: 'changeArticleTitle',
               payload: {
-                title: 'title',
+                title: value,
               },
             });
           }}

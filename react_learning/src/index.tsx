@@ -22,7 +22,7 @@ ReactDOM.render(
         <Route path={paths.general} element={<General />} />
         <Route path={paths.article.add} element={<ArticleAdd />} />
         <Route path={paths.articles.index + '/:id'} element={<Detail />} />
-        <Route path="/loginTop" element={<LoginTop />} />
+        <Route path={paths.loginTop} element={<LoginTop />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

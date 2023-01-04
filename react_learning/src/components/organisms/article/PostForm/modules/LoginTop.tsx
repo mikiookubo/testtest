@@ -1,21 +1,29 @@
 import { Title } from '../../../Title';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import { LabelAndTextInput } from '../../../../molecules';
 import { Heder } from './Heder';
-import { useState } from 'react';
-import { ErrorMessage } from '../../../../atoms';
+import { Count } from './count';
 
 export const LoginTop = () => {
   const valueText = {
     login: '',
     info: '',
+
+    loginError: '',
+    infoError: '',
   };
   type valueProps = {
     login: string;
     info: string;
+
+    loginError: string;
+    infoError: string;
   };
 
   const [textValue, setTextValue] = useState<valueProps>(valueText);
-  const [error, setError] = useState<inputKey>({});
+
+  const [error, setError] = useState(valueText);
   type inputKey = {
     [key: string]: string;
   };
@@ -30,11 +38,45 @@ export const LoginTop = () => {
     }
     return errorItem;
   };
-  setError(validate(textValue));
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
-    const { placeholder, value } = e.target;
-    setTextValue({ ...textValue, [placeholder]: value });
+  //setError(validate(textValue));
+
+  const test = (ev: valueProps['login']) => {};
+
+  const loginOnChange = (e: string) => {
+    setTextValue({ ...textValue, login: e });
+    console.log(textValue.login);
+
+    // else {
+    //   setError({ ...valueText, loginError: '' });
+    // }
   };
+  useEffect(() => {
+    if (!textValue.login) {
+      setError({ ...textValue, loginError: 'エラー' });
+    } else {
+      setError({ ...textValue, loginError: '' });
+    }
+  }, [textValue.login]);
+
+  console.log(textValue.login);
+
+  console.log(textValue.loginError);
+  const infoOnChange = (e: string) => {
+    setTextValue({ ...textValue, info: e });
+    console.log(e);
+
+    if (!e) {
+      setError({ ...valueText, infoError: 'kk' });
+    } else {
+      setError({ ...valueText, infoError: '' });
+    }
+    // else {
+    //   setError({ ...valueText, infoError: '' });
+    // }
+  };
+  // console.log(textValue.login);
+
+  // console.log(textValue.login);
 
   return (
     <div>
@@ -42,12 +84,19 @@ export const LoginTop = () => {
       <Title>ログイン</Title>
       <LabelAndTextInput
         labelTitle="ログインID (メールアドレス)"
-        errorMessage=""
+        errorMessage={error && error.loginError}
         value={textValue.login}
         placeholder=""
-        onChange={setTextValue(textValue.login)}
+        onChange={(e) => loginOnChange(e)}
       />
-      <ErrorMessage>{error}</ErrorMessage>
+      <Count />
+      <LabelAndTextInput
+        labelTitle="パスワード"
+        errorMessage={textValue.infoError}
+        value={textValue.info}
+        placeholder=""
+        onChange={(e) => infoOnChange(e)}
+      />
     </div>
   );
 };
