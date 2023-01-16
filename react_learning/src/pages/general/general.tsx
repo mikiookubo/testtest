@@ -12,7 +12,9 @@ export const General: React.FC = () => {
         <h1 className="text-xl">ブログサービス課題</h1>
         <p className="mt-5">React.jsを利用したブログサービス課題です。</p>
 
-        <div className="flex mx-auto w-40 flex-col "></div>
+        <div className="flex mx-auto w-40 flex-col ">
+          <TopPageButtonAndButton />
+        </div>
       </div>
     </div>
   );

@@ -13,7 +13,7 @@ export const LabelAndTextInput: React.FC<Props> = ({
   ...props
 }) => {
   return (
-    <>
+    <div className="mt-6">
       <label>
         {labelTitle}
         <div>
@@ -21,6 +21,6 @@ export const LabelAndTextInput: React.FC<Props> = ({
         </div>
       </label>
       {errorMessage && <ErrorMessage>{errorMessage}</ErrorMessage>}
-    </>
+    </div>
   );
 };

@@ -23,7 +23,6 @@ export const PostForm: React.FC = () => {
   const [formState, dispatch] = useReducer(reducer, initialState);
 
   const { shouldShowError, title, description } = formState;
-
   const clickPostButton = async () => {
     if (!shouldShowError) {
       dispatch({

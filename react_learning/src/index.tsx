@@ -11,6 +11,7 @@ import { General } from './pages/general/general';
 import { ArticleAdd } from './pages/general/articles/Add';
 import { Detail } from './pages/general/articles/Detail';
 import { LoginTop } from './components/organisms/article/PostForm/modules/LoginTop';
+import { InfoTop } from './components/organisms/article/PostForm/modules/infoTop';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -23,6 +24,7 @@ ReactDOM.render(
         <Route path={paths.article.add} element={<ArticleAdd />} />
         <Route path={paths.articles.index + '/:id'} element={<Detail />} />
         <Route path={paths.loginTop} element={<LoginTop />} />
+        <Route path={paths.infoTop} element={<InfoTop />} />
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

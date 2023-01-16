@@ -12,7 +12,11 @@ export const TopPageButtonAndButton: React.FC = () => {
     naviGate(paths.loginTop);
     setPush(!push);
   };
-  console.log(push);
+
+  const infoClick = () => {
+    naviGate(paths.infoTop);
+    setPush(!push);
+  };
 
   return (
     <>
@@ -23,7 +27,7 @@ export const TopPageButtonAndButton: React.FC = () => {
         isDisabled={push}
       />
       <SimpleButton
-        onClick={loginClick}
+        onClick={infoClick}
         name="会員登録"
         className="bg-white text-black py-3 px-4 border m-4 w-36"
         isDisabled={push}

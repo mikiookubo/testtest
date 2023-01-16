@@ -11,7 +11,7 @@ export const Heder: React.FC = () => {
   console.log(open);
 
   return (
-    <div className="mb-48">
+    <div className="mb-28">
       <LogoAndMenu onClick={onClick} open={open}></LogoAndMenu>
       <Nav open={open} />
     </div>

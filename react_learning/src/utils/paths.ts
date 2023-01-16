@@ -4,7 +4,7 @@ export const paths = {
   blackJack: '/blackJack',
   general: '/general',
   loginTop: '/loginTop',
-
+  infoTop: '/infoTop',
   article: {
     add: '/general/article/add',
   },
