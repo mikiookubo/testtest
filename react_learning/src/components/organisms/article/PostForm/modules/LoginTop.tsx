@@ -1,103 +1,82 @@
 import { Title } from '../../../Title';
 import { useState } from 'react';
-import { LabelAndTextInput } from '../../../../molecules';
 import { Heder } from './Heder';
 import { Button } from '../../../../atoms/Button';
-import { validationCheck } from '../../../../atoms/ErrorObject';
+import { formValidate } from '../../../../atoms/ErrorObject';
+import { SimpleLabelAndTextInput } from '../../../../molecules/SimpleLabelAndTextInput';
 
 export const LoginTop = () => {
-  const valueText = {
+  const valueText = { login: '', password: '' };
+
+  const errorValue = {
     login: '',
-    info: '',
-    loginError: '',
-    infoError: '',
+    password: '',
   };
 
-  type valueProps = {
-    login: string;
-    info: string;
-    loginError: string;
-    infoError: string;
-  };
+  const [textValue, setTextValue] = useState(valueText);
+  const [error, setError] = useState(errorValue);
+  const [isDisabled, setIsDisabled] = useState(false);
 
-  const [textValue, setTextValue] = useState<valueProps>(valueText);
-  const [error, setError] = useState(valueText);
-  const [isDisabled, setIsDisabled] = useState(true);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
+    const key = e.target.name;
+    const value = e.target.value;
+    setTextValue((prev) => ({ ...prev, [key]: value }));
+    console.log(error);
 
-  const loginOnChange = (loginValue: string) => {
-    setTextValue((prev) => ({ ...prev, login: loginValue }));
-
-    if (!loginValue) {
-      setError((prev) => ({
-        ...prev,
-        loginError: 'ログインIDを入力してください',
-      }));
-      setIsDisabled(true);
-    } else if (!validationCheck.mailCheck.test(loginValue)) {
-      setError((prev) => ({
-        ...prev,
-        loginError: 'メールアドレスを入力してください',
-      }));
-
-      setIsDisabled(true);
-    } else if (!textValue.info) {
-      setIsDisabled(true);
-      // setError((prev) => ({
-      //   ...prev,
-      //   loginError: '',
-      // }));
-    } else {
-      setError((prev) => ({
-        ...prev,
-        loginError: '',
-      }));
-      setIsDisabled(false);
+    setError((prev) => ({
+      ...prev,
+      [key]: formValidate(key, value),
+    }));
+    console.log(error);
+    if (!textValue.login || !textValue.password) {
+      //   setIsDisabled(true);
+      // } else if (!error.login && !error.password) {
+      //   setIsDisabled(false);
+      // } else {
+      //   setIsDisabled(true);
     }
-  };
 
-  const infoOnChange = (infoValue: string) => {
-    setTextValue((prev) => ({ ...prev, info: infoValue }));
-    setError((prev) => ({ ...prev, infoError: '' }));
-
-    if (!infoValue) {
-      setError({ ...textValue, infoError: 'パスワードを入力してください' });
-      setIsDisabled(true);
-    } else if (!validationCheck.passwordCheck.test(infoValue)) {
-      setError({ ...textValue, infoError: '英数8文字以上で入力してください' });
-      setIsDisabled(true);
-    } else if (!textValue.login) {
-      setIsDisabled(true);
-      // setError({ ...textValue, infoError: '' });
-    } else {
-      setError({ ...textValue, infoError: '' });
-      setIsDisabled(false);
-    }
+    console.log(isDisabled);
   };
   const onClick = () => {};
+
+  // const submit = (): boolean => {
+  //   const vinfo =
+  //     Object.values(textValue).filter((value) => {
+  //       return value === '';
+  //     }).length === 0;
+
+  //   const vmassege =
+  //     Object.values(error).filter((value) => {
+  //       return value !== '';
+  //     }).length === 0;
+  //   return vinfo || vmassege || !isDisabled;
+  // };
+  // console.log(isDisabled);
+  // submit();
+  // console.log(isDisabled);
 
   return (
     <div className="">
       <Heder></Heder>
       <Title>ログイン</Title>
       <div className="w-9/12 m-auto">
-        <LabelAndTextInput
+        <SimpleLabelAndTextInput
           labelTitle="ログインID (メールアドレス)"
-          errorMessage={error.loginError}
+          ErrorMessage={error && error.login}
           value={textValue.login}
-          placeholder=""
-          onChange={(e) => {
-            loginOnChange(e);
-          }}
+          name="login"
+          onChange={onChange}
+          id="loginError"
         />
 
-        <LabelAndTextInput
+        <SimpleLabelAndTextInput
           labelTitle="パスワード"
-          errorMessage={error.infoError}
-          value={textValue.info}
-          placeholder=""
-          onChange={(e) => {
-            infoOnChange(e);
-          }}
+          value={textValue.password}
+          onChange={onChange}
+          ErrorMessage={error.password}
+          name="password"
+          id="passwordError"
         />
 
         <div className="w-2/6 m-0 mt-9 ml-auto">

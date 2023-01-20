@@ -6,8 +6,9 @@ import { Label } from '../../../../atoms/Label';
 import { useState } from 'react';
 import { FileProvider } from '../../../../atoms/FileContext';
 import { Button } from '../../../../atoms';
-import { validationCheck } from '../../../../atoms/ErrorObject';
+
 import { Count } from '../../../../atoms/cont';
+import { errorobj, formValidate } from '../../../../atoms/ErrorObject';
 
 export const InfoTop = () => {
   const valueForm = {
@@ -22,18 +23,20 @@ export const InfoTop = () => {
     passwordCheckError: '',
     nameError: '',
   };
+
   const [textValue, setTextValue] = useState(valueForm);
   const [error, setError] = useState(errorForm);
 
   const loginChange = (loginValue: string) => {
     setTextValue((prev) => ({ ...prev, login: loginValue }));
-
+    console.log(textValue, 'textValue');
+    // setError({...error,valueForm(loginError,loginValue)});
     if (!loginValue) {
       setError((prev) => ({
         ...prev,
         loginError: 'ログインIDを入力してください',
       }));
-    } else if (!validationCheck.mailCheck.test(loginValue)) {
+    } else if (!errorobj.mailCheck.test(loginValue)) {
       setError((prev) => ({
         ...prev,
         loginError: 'メールアドレスを入力してください',
@@ -49,7 +52,6 @@ export const InfoTop = () => {
 
   const passwordChange = (passwordValue: string) => {
     setTextValue((prev) => ({ ...prev, password: passwordValue }));
-    console.log(textValue);
 
     console.log(textValue.password);
     console.log(textValue.passwordCheck);
@@ -58,7 +60,7 @@ export const InfoTop = () => {
         ...prev,
         passwordError: 'パスワードを入力してください',
       }));
-    } else if (!validationCheck.passwordCheck.test(passwordValue)) {
+    } else if (!errorobj.passwordCheck.test(passwordValue)) {
       setError((prev) => ({
         ...prev,
         passwordError: '英数8文字以上で入力してください',
@@ -73,6 +75,7 @@ export const InfoTop = () => {
 
   const passwordCheckChange = (passwordCheckValue: string) => {
     setTextValue((prev) => ({ ...prev, passwordCheck: passwordCheckValue }));
+
     if (!passwordCheckValue) {
       setError((prev) => ({
         ...prev,
@@ -95,25 +98,25 @@ export const InfoTop = () => {
     }
   };
 
-  const nameChange = (nameValue: string) => {
-    setTextValue((prev) => ({ ...prev, name: nameValue }));
-    if (!nameValue) {
-      setError((prev) => ({
-        ...prev,
-        nameError: 'パスワードを入力してください',
-      }));
-    } else if (!validationCheck.passwordCheck.test(nameValue)) {
-      setError((prev) => ({
-        ...prev,
-        nameError: '英数8文字以上で入力してください',
-      }));
-    } else {
-      setError((prev) => ({
-        ...prev,
-        nameError: '',
-      }));
-    }
-  };
+  // const nameChange = (nameValue: string) => {
+  //   setTextValue((prev) => ({ ...prev, name: nameValue }));
+  //   if (!nameValue) {
+  //     setError((prev) => ({
+  //       ...prev,
+  //       nameError: 'パスワードを入力してください',
+  //     }));
+  //   } else if (!validationCheck.passwordCheck.test(nameValue)) {
+  //     setError((prev) => ({
+  //       ...prev,
+  //       nameError: '英数8文字以上で入力してください',
+  //     }));
+  //   } else {
+  //     setError((prev) => ({
+  //       ...prev,
+  //       nameError: '',
+  //     }));
+  //   }
+  // };
 
   const onClick = () => {};
 
@@ -143,13 +146,13 @@ export const InfoTop = () => {
           placeholder=""
           onChange={(e) => passwordCheckChange(e)}
         />
-        <LabelAndTextInput
+        {/* <LabelAndTextInput
           labelTitle="ニックネーム(8文字以上)"
           errorMessage={error.nameError}
           value={textValue.name}
           placeholder=""
           onChange={(e) => nameChange(e)}
-        />
+        /> */}
         <div className="mt-4">
           <Label labelClassName="" name="ユーザーアイコン画像"></Label>
         </div>
