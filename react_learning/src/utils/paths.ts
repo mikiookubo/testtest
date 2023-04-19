@@ -5,6 +5,7 @@ export const paths = {
   general: '/general',
   loginTop: '/loginTop',
   infoTop: '/infoTop',
+  mypage: '/myPage',
   article: {
     add: '/general/article/add',
   },

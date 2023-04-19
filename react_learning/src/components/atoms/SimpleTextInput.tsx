@@ -4,7 +4,7 @@ import { ErrorMessage } from './ErrorMessage';
 type Props = {
   value: string;
   name: string;
-  id: string;
+
   ErrorMessage: string;
 
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -13,7 +13,7 @@ export const SimpleTextInput: React.FC<Props> = ({
   value,
   name,
   onChange,
-  id,
+
   ErrorMessage,
 }) => {
   return (
@@ -25,9 +25,7 @@ export const SimpleTextInput: React.FC<Props> = ({
         name={name}
         onChange={onChange}
       />
-      <p className="text-red-600" id={id}>
-        {ErrorMessage}
-      </p>
+      <p className="text-red-600">{ErrorMessage}</p>
     </div>
   );
 };
