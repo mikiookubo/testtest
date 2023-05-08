@@ -1,10 +1,11 @@
-import React, { useReducer } from 'react';
+import React, { useContext, useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { paths } from '../../../../utils/paths';
 import { Button } from '../../../atoms';
 import { LabelAndTextInput, LabelAndTextArea } from '../../../molecules';
 import { reducer } from './modules/reducer';
 import type { InputForm, RequestBody } from './modules/types';
+import { UserIdContext } from '../../../../utils/useridContext';
 
 export const requiredError = '必須入力です';
 export const initialState: InputForm = {
@@ -21,9 +22,12 @@ export const initialState: InputForm = {
 export const PostForm: React.FC = () => {
   const navigate = useNavigate();
   const [formState, dispatch] = useReducer(reducer, initialState);
+  const { userId, setUserId } = useContext(UserIdContext);
 
   const { shouldShowError, title, description } = formState;
+
   const clickPostButton = async () => {
+    setUserId(userId + 1);
     if (!shouldShowError) {
       dispatch({
         type: 'showErrorMessage',
@@ -35,32 +39,33 @@ export const PostForm: React.FC = () => {
     )
       return;
 
-    const body: RequestBody = {
-      user_id: 'hoge', // TODO ログイン機能仕込んだらuserId指定してあげてね
+    const data = {
       title: formState.title.value,
       content: formState.description.value,
+      article_id: userId,
+      created_at: '2021-05-01T06:30:09.123Z',
+      updated_at: '2021-05-01T06:30:09.123Z',
     };
-    await fetch('http://localhost:8000/api/articles', {
-      body: JSON.stringify(body),
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-      },
-    })
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        //　TODO　エラーハンドリング理解してやってもらいたいので、書いていない
-        //  よって一通りの画面実装が終わったら下記を修正してほしい
-        throw new Error('通信エラー');
-      })
-      .then((result) => {
-        navigate(paths.articles.detail(result.article_id));
-      })
-      .catch((e: Error) => {
-        alert(e.message);
-      });
+
+    const url = '/articles';
+    const setting = {
+      method: 'post',
+      body: JSON.stringify(data),
+    };
+    try {
+      const res = await fetch(url, setting);
+      const data = await res.json();
+
+      if (res.status === 404) {
+        alert('サーバーにアクセス出来ません。');
+        return;
+      }
+
+      navigate(paths.articles.detail(userId + ''), { state: 'add' });
+    } catch (e) {
+      console.log(e);
+    }
+    return;
   };
 
   return (

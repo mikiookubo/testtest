@@ -14,7 +14,6 @@ export const FileProvider: React.FC<Props> = ({ imgLabel, setFile, src }) => {
         alert('ファイルを選択してください');
         return false;
       }
-      console.log(files.type);
 
       if (files.type !== 'image/jpeg') {
         alert('ファイル形式はjpegのみです');
@@ -23,17 +22,8 @@ export const FileProvider: React.FC<Props> = ({ imgLabel, setFile, src }) => {
 
       reader.readAsDataURL(files);
       reader.onload = () => {
-        // setFile(reader.result);
         setFile(reader.result);
-        console.log(reader.result);
-
-        console.log(btoa(reader.result));
-        // console.log(atob(reader.result));
-        console.log(files.name);
-        console.log(btoa(files.name));
       };
-
-      console.log(reader.result);
 
       setFile(files.name);
     }

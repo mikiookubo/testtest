@@ -10,24 +10,36 @@ import { BlackJack } from './pages/blackJack/BlackJack';
 import { General } from './pages/general/general';
 import { ArticleAdd } from './pages/general/articles/Add';
 import { Detail } from './pages/general/articles/Detail';
-import { LoginTop } from './components/organisms/article/PostForm/modules/LoginTop';
-import { InfoTop } from './components/organisms/article/PostForm/modules/infoTop';
-import { Mypage } from './components/organisms/article/PostForm/modules/Mypage';
+import { LoginTop } from './pages/general/login';
+import { InfoTop } from './pages/general/info';
+import { Mypage } from './pages/general/mypage';
+import { UserIdProvider } from './utils/useridContext';
+import { NotFound } from './pages/general/404page';
+import { InfoChange } from './pages/general/Infochange';
+import { PostList } from './pages/general/articles/postlist';
+import { InfoProvider } from './utils/imfoContext';
 
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
-      <Routes>
-        <Route path={paths.top} element={<App />} />
-        <Route path={paths.form} element={<Form />} />
-        <Route path={paths.blackJack} element={<BlackJack />} />
-        <Route path={paths.general} element={<General />} />
-        <Route path={paths.article.add} element={<ArticleAdd />} />
-        <Route path={paths.articles.index + '/:id'} element={<Detail />} />
-        <Route path={paths.loginTop} element={<LoginTop />} />
-        <Route path={paths.infoTop} element={<InfoTop />} />
-        <Route path={paths.mypage} element={<Mypage />} />
-      </Routes>
+      <UserIdProvider>
+        <InfoProvider>
+          <Routes>
+            <Route path={paths.top} element={<App />} />
+            <Route path={paths.form} element={<Form />} />
+            <Route path={paths.blackJack} element={<BlackJack />} />
+            <Route path={paths.general} element={<General />} />
+            <Route path={paths.article.add} element={<ArticleAdd />} />
+            <Route path={paths.articles.index + '/:id'} element={<Detail />} />
+            <Route path={paths.loginTop} element={<LoginTop />} />
+            <Route path={paths.infoTop} element={<InfoTop />} />
+            <Route path={paths.mypage} element={<Mypage />} />
+            <Route path={paths.infochange} element={<InfoChange />} />
+            <Route path={paths.articles.index} element={<PostList />} />
+            <Route path={paths.notfound} element={<NotFound />} />
+          </Routes>
+        </InfoProvider>
+      </UserIdProvider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')

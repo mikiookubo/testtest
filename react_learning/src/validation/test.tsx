@@ -28,7 +28,6 @@ class App extends Component {
         [key]: Validation.formValidate(key, value),
       },
     });
-    console.log(info.email);
   };
 
   canSubmit = (): boolean => {
@@ -47,7 +46,7 @@ class App extends Component {
 
   submit = () => {
     this.setState({ loading: true });
-    // ここに追加処理
+
     this.setState({ loading: false });
   };
 

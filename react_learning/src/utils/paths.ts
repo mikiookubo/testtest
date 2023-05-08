@@ -6,6 +6,12 @@ export const paths = {
   loginTop: '/loginTop',
   infoTop: '/infoTop',
   mypage: '/myPage',
+
+  infochange: '/infoChange',
+
+  postlist: '/myPage/postlist',
+
+  notfound: '*',
   article: {
     add: '/general/article/add',
   },
