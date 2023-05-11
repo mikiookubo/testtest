@@ -1,5 +1,4 @@
 import React from 'react';
-import { ErrorMessage } from './ErrorMessage';
 
 type Props = {
   value: string;

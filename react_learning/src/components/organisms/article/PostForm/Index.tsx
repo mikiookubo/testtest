@@ -1,10 +1,10 @@
-import React, { useContext, useReducer, useState } from 'react';
+import React, { useContext, useEffect, useReducer, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { paths } from '../../../../utils/paths';
 import { Button } from '../../../atoms';
 import { LabelAndTextInput, LabelAndTextArea } from '../../../molecules';
 import { reducer } from './modules/reducer';
-import type { InputForm, RequestBody } from './modules/types';
+import type { InputForm } from './modules/types';
 import { UserIdContext } from '../../../../utils/useridContext';
 
 export const requiredError = '必須入力です';
@@ -13,18 +13,26 @@ export const initialState: InputForm = {
   title: {
     value: '',
     errorMessage: requiredError,
+    isDisabled: true,
   },
   description: {
     value: '',
     errorMessage: requiredError,
+    isDisabled: true,
   },
 };
 export const PostForm: React.FC = () => {
   const navigate = useNavigate();
   const [formState, dispatch] = useReducer(reducer, initialState);
   const { userId, setUserId } = useContext(UserIdContext);
-
+  const [isDisabled, setIsDisabled] = useState<boolean>(true);
   const { shouldShowError, title, description } = formState;
+
+  useEffect(() => {
+    if (!title.isDisabled && !description.isDisabled) {
+      setIsDisabled(false);
+    } else setIsDisabled(true);
+  }, [title.value, description.value]);
 
   const clickPostButton = async () => {
     setUserId(userId + 1);
@@ -54,7 +62,6 @@ export const PostForm: React.FC = () => {
     };
     try {
       const res = await fetch(url, setting);
-      const data = await res.json();
 
       if (res.status === 404) {
         alert('サーバーにアクセス出来ません。');
@@ -67,6 +74,7 @@ export const PostForm: React.FC = () => {
     }
     return;
   };
+  console.log(isDisabled);
 
   return (
     <div>
@@ -105,7 +113,11 @@ export const PostForm: React.FC = () => {
       </div>
 
       <div className="w-3/12 float-right">
-        <Button name="投稿する" onClick={clickPostButton} />
+        <Button
+          name="投稿する"
+          onClick={clickPostButton}
+          isDisabled={isDisabled}
+        />
       </div>
     </div>
   );

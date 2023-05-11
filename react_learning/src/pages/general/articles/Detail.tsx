@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Title } from '../../../components/atoms/Title';
-import { Heder } from '../../../components/organisms/article/PostForm/modules/Heder';
+
 import { UserIdContext } from '../../../utils/useridContext';
 import { useLocation } from 'react-router-dom';
 import { DetailArea } from '../../../components/organisms/article/PostForm/Detail';
@@ -67,7 +67,7 @@ export const Detail: React.FC = () => {
     <div>
       <AddHeder></AddHeder>
       <Title>詳細画面</Title>
-      <div>
+      <div className="w-9/12 m-auto">
         <DetailArea name={name} title={title} content={content}></DetailArea>
       </div>
     </div>

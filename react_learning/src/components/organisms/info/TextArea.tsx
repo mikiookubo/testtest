@@ -1,8 +1,7 @@
-import { FC, useContext, useEffect, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { SimpleLabelAndTextInput } from '../../molecules/SimpleLabelAndTextInput';
 import { formValidate } from '../../../validation/ErrorObject';
 import React from 'react';
-import { UserIdContext } from '../../../utils/useridContext';
 
 const errorForm = {
   login: '',

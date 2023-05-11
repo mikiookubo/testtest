@@ -2,16 +2,16 @@ export type Error = string | undefined;
 
 export type Action =
   | {
-      type: "showErrorMessage";
+      type: 'showErrorMessage';
     }
   | {
-      type: "changeArticleTitle";
+      type: 'changeArticleTitle';
       payload: {
         title: string;
       };
     }
   | {
-      type: "changeArticleDescription";
+      type: 'changeArticleDescription';
       payload: {
         description: string;
       };
@@ -22,10 +22,12 @@ export type InputForm = {
   title: {
     value: string;
     errorMessage: Error;
+    isDisabled: boolean;
   };
   description: {
     value: string;
     errorMessage: Error;
+    isDisabled: boolean;
   };
 };
 

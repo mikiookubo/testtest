@@ -15,8 +15,7 @@ export const LoginTop = () => {
   const valueText = { login: '', password: '' };
   const [textValue, setTextValue] = useState(valueText);
   const [isDisabled, setIsDisabled] = useState(true);
-  const { setUserId, setLoginStatus, setInfoStatus, infoStatus } =
-    useContext(UserIdContext);
+  const { setLoginStatus } = useContext(UserIdContext);
   let infoData: any;
   const pageDate = sessionStorage.getItem('page');
 

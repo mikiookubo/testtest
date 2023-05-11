@@ -1,23 +1,24 @@
-import React from "react";
-import { InputForm, Action } from "./types";
+import React from 'react';
+import { InputForm, Action } from './types';
 
 export const reducer: React.Reducer<InputForm, Action> = (
   prevState,
   action
 ) => {
   switch (action.type) {
-    case "showErrorMessage":
+    case 'showErrorMessage':
       return {
         ...prevState,
         shouldShowError: true,
       };
-    case "changeArticleTitle":
+    case 'changeArticleTitle':
       if (!action.payload.title.length) {
         return {
           ...prevState,
           title: {
             value: action.payload.title,
-            errorMessage: "必須入力です",
+            errorMessage: '必須入力です',
+            isDisabled: true,
           },
         };
       }
@@ -27,15 +28,17 @@ export const reducer: React.Reducer<InputForm, Action> = (
         title: {
           value: action.payload.title,
           errorMessage: undefined,
+          isDisabled: false,
         },
       };
-    case "changeArticleDescription":
+    case 'changeArticleDescription':
       if (!action.payload.description.length) {
         return {
           ...prevState,
           description: {
             value: action.payload.description,
-            errorMessage: "必須入力です",
+            errorMessage: '必須入力です',
+            isDisabled: true,
           },
         };
       }
@@ -45,6 +48,7 @@ export const reducer: React.Reducer<InputForm, Action> = (
         description: {
           value: action.payload.description,
           errorMessage: undefined,
+          isDisabled: false,
         },
       };
     default:

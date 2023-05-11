@@ -1,8 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { UserIdContext } from '../../../utils/useridContext';
-import { Heder } from '../../../components/organisms/article/PostForm/modules/Heder';
-import { Link } from 'react-router-dom';
-import { paths } from '../../../utils/paths';
+
 import { Title } from '../../../components/atoms/Title';
 import { ArticlesList } from '../../../components/organisms/article/PostForm/PostList';
 import { PageArticleButton } from '../../../components/organisms/article/PostForm/PageButton';
@@ -33,7 +31,7 @@ export const PostList = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const articlesNumber = articles.length;
-  const page = Math.ceil(articlesNumber / 20);
+  // const page = Math.ceil(articlesNumber / 20);
 
   useEffect(() => {
     if (articlesNumber <= 21) {
@@ -64,15 +62,24 @@ export const PostList = () => {
     } else if (currentPage === 5) {
       setArticleList(articles.slice(81, 101));
     }
-
-    if (currentPage <= 1) {
-      setIsDisabled({ ...isDisabled, prev: true });
-      setIsDisabled({ ...isDisabled, next: false });
+    console.log(currentPage);
+    if (currentPage === 1) {
+      console.log(currentPage, 'ボタン活性ステートの現在ページ');
+      setIsDisabled({ ...isDisabled, prev: true, next: false });
+      console.log(isDisabled?.prev, '前へボタンの活性化');
+      console.log(isDisabled?.next, '次へボタンの活性化');
+    } else if (currentPage <= 2) {
+      console.log(currentPage, 'ボタン活性ステートの現在ページ');
+      setIsDisabled({ ...isDisabled, prev: false, next: false });
     } else if (currentPage === 5) {
-      setIsDisabled({ ...isDisabled, next: true });
-      setIsDisabled({ ...isDisabled, prev: false });
+      console.log(currentPage, 'ボタン活性ステートの現在ページ');
+      setIsDisabled({ ...isDisabled, prev: false, next: true });
     }
+    console.log(isDisabled?.prev, '前へボタンの活性化');
+    console.log(isDisabled?.next, '次へボタンの活性化');
   }, [currentPage]);
+  console.log(isDisabled?.prev, '前へボタンの活性化');
+  console.log(isDisabled?.next, '次へボタンの活性化');
 
   const dataRequest = {
     total: articlesNumber,
@@ -96,8 +103,7 @@ export const PostList = () => {
         body: JSON.stringify(dataRequest),
       };
       try {
-        const postRes = await fetch('/articlelist/', postSetting);
-        const postData = await postRes.json();
+        await fetch('/articlelist/', postSetting);
       } catch (e) {
         console.log(e);
       }
@@ -108,8 +114,7 @@ export const PostList = () => {
         method: 'GET',
       };
       try {
-        const getRes = await fetch(url, getSetting);
-        const getData = await getRes.json();
+        await fetch(url, getSetting);
       } catch (e) {
         console.log(e);
       }
@@ -121,32 +126,38 @@ export const PostList = () => {
 
   // 次へボタンクリック処理
   const Next = () => {
+    setCurrentPage((prev) => prev + 1);
+    console.log(currentPage, '次へボタンおし現在のページ');
     if (currentPage === 5) {
       return false;
     }
-    setCurrentPage(currentPage + 1);
   };
+  console.log(currentPage, '現在のページ');
   // 前ボタンクリック処理
   const prev = () => {
+    setCurrentPage(currentPage - 1);
+    console.log(currentPage, '現在のページ');
     if (currentPage === 1) {
       return false;
     }
-    setCurrentPage(currentPage - 1);
   };
 
   return (
     <>
       <AddHeder></AddHeder>
-      <Title>一覧</Title>
-      <ArticlesList articleList={articleList}></ArticlesList>
-      <PageArticleButton
-        setCurrentPage={setCurrentPage}
-        prevOnClick={prev}
-        nextDisabled={isDisabled.next}
-        prevDisabled={isDisabled.prev}
-        nextOnClick={Next}
-        lastPage={lastPage}
-      />
+      <Title>投稿一覧画面</Title>
+
+      <div className="w-9/12 m-auto">
+        <ArticlesList articleList={articleList}></ArticlesList>
+        <PageArticleButton
+          setCurrentPage={setCurrentPage}
+          prevOnClick={prev}
+          nextDisabled={isDisabled.next}
+          prevDisabled={isDisabled.prev}
+          nextOnClick={Next}
+          lastPage={lastPage}
+        />
+      </div>
     </>
   );
 };

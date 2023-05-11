@@ -3,18 +3,9 @@ import { rest } from 'msw';
 // https://mswjs.io/
 // ここにinterface仕様書のAPIを作っていく
 
-type Info = {
-  name: string;
-
-  email: string;
-  password: string;
-  password_confirmation: string;
-  representative_image: string;
-};
-
 let infoData: any;
 
-let articlesdata: any;
+let articlesData: any;
 let articlesDate: any;
 let articlesId;
 
@@ -53,6 +44,7 @@ export const handlers = [
   rest.post('user', async (req, res, ctx) => {
     const dataBody = req.body;
     infoData = JSON.parse(dataBody as string);
+    console.log(infoData.representative_image);
 
     return res(
       ctx.status(201),
@@ -117,15 +109,15 @@ export const handlers = [
 
   rest.post('/articles', (req, res, ctx) => {
     const dataBody = req.body;
-    articlesdata = JSON.parse(dataBody as string);
-    articlesId = articlesdata.article_id;
+    articlesData = JSON.parse(dataBody as string);
+    articlesId = articlesData.article_id;
 
     return res(
       ctx.status(201),
       ctx.json({
-        title: articlesdata.title,
-        content: articlesdata.content,
-        article_id: articlesdata.article_id,
+        title: articlesData.title,
+        content: articlesData.content,
+        article_id: articlesData.article_id,
       })
     );
   }),
@@ -133,12 +125,12 @@ export const handlers = [
     return res(
       ctx.status(201),
       ctx.json({
-        title: articlesdata.title,
-        content: articlesdata.content,
+        title: articlesData.title,
+        content: articlesData.content,
         user_name: data.name,
-        article_id: articlesdata.article_id,
-        created_at: articlesdata.created_at,
-        updated_at: articlesdata.updated_at,
+        article_id: articlesData.article_id,
+        created_at: articlesData.created_at,
+        updated_at: articlesData.updated_at,
       })
     );
   }),
@@ -166,8 +158,6 @@ export const handlers = [
     );
   }),
   rest.get('/articles', (req, res, ctx) => {
-    const page = req.url.searchParams.get('page');
-
     return res(
       ctx.status(201),
       ctx.json({

@@ -8,7 +8,7 @@ type Props = {
 
 export const DetailArea: FC<Props> = ({ name, title, content }) => {
   return (
-    <div>
+    <div className="mt-6 p-5 border-2 border-black border-solid">
       <p>ユーザーネーム:{name}</p>
       <p>{title}</p>
       <p>{content}</p>

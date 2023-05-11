@@ -1,8 +1,7 @@
-import { error } from 'console';
 import { Button } from '../../components/atoms';
 import { Title } from '../../components/atoms/Title';
 import { SimpleLabelAndTextInput } from '../../components/molecules/SimpleLabelAndTextInput';
-import { Heder } from '../../components/organisms/article/PostForm/modules/Heder';
+
 import { FileProvider } from '../../components/organisms/info/FileContext';
 import { useEffect, useState } from 'react';
 
@@ -46,11 +45,6 @@ export const InfoChange = () => {
   const onClick = () => {
     const userId = localStorage.getItem('useId');
     const fileData = file.replace(/^data:\w+\/\w+;base64,/, '');
-    let chars = 'abcdefghijklmnopqrstuvwxyz0123456789-';
-    let user_id = '';
-    for (let i = 0; i < 35; i++) {
-      user_id += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
 
     const request = {
       name: textValue.name,
@@ -65,7 +59,7 @@ export const InfoChange = () => {
     const infoPut = async () => {
       try {
         const res = await fetch(`/user/:${userId}`, setting);
-        const data = await res.json();
+
         if (!res.ok) {
           throw new Error('非同期に失敗');
         } else if (res.status === 500) {

@@ -1,5 +1,4 @@
 import React from 'react';
-import { FileProvider } from '../organisms/info/FileContext';
 
 type Props = {
   src: string;

@@ -1,4 +1,4 @@
-import { FC, useState } from 'react';
+import { FC } from 'react';
 
 type Props = {
   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
@@ -21,12 +21,17 @@ export const PageArticleButton: FC<Props> = ({
   const pages = [1, 2, 3, 4, 5];
 
   return (
-    <div>
-      <button onClick={prevOnClick} disabled={prevDisabled}>
+    <div className="mt-8 text-center mb-6">
+      <button
+        className="w-8 border border-gray-400 border-solid"
+        onClick={prevOnClick}
+        disabled={prevDisabled}
+      >
         ＜
       </button>
       {pages.map((page) => (
         <button
+          className="w-8 border border-gray-400 border-solid ml-2.5"
           onClick={() => {
             setCurrentPage(page);
           }}
@@ -35,7 +40,11 @@ export const PageArticleButton: FC<Props> = ({
           {page}
         </button>
       ))}
-      <button onClick={nextOnClick} disabled={nextDisabled}>
+      <button
+        className="w-8 border border-gray-400 border-solid ml-2.5"
+        onClick={nextOnClick}
+        disabled={nextDisabled}
+      >
         ＞
       </button>
     </div>

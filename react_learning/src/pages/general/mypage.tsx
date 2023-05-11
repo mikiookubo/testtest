@@ -1,14 +1,12 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 
 import { MyPageArea } from '../../components/organisms/mypage/MypageArea';
 import { UserIdContext } from '../../utils/useridContext';
-import { data } from 'msw/lib/types/context';
-import { Heder } from '../../components/organisms/article/PostForm/modules/Heder';
-import { useLocation } from 'react-router-dom';
+
 import { AddHeder } from '../../components/organisms/article/PostForm/modules/AddHeder';
 
 export const Mypage = () => {
-  const { loginStatus, setInfoStatus } = useContext(UserIdContext);
+  const { setInfoStatus } = useContext(UserIdContext);
   const [value, setValue] = useState('');
   const [src, setSrc] = useState('');
 
@@ -25,8 +23,13 @@ export const Mypage = () => {
       const res = await fetch(`/user/:${userId}`, setting);
       const data = await res.json();
 
+      if (data.representative_image.slice(0, 7) === '/9j/4AA') {
+        setSrc('data:image/jpeg;base64,' + data.representative_image);
+      } else {
+        setSrc(data.representative_image);
+      }
+
       setValue(data.email);
-      setSrc(data.representative_image);
     } catch (e) {
       console.log(e, 'ミス');
     }

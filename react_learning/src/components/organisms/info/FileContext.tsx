@@ -7,9 +7,14 @@ type Props = {
 export const FileProvider: React.FC<Props> = ({ imgLabel, setFile, src }) => {
   const OnChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
     const reader: any = new FileReader();
-    let url: string | ArrayBuffer | null = '';
+
     if (e.currentTarget.files !== null) {
       const files = e.currentTarget.files[0];
+      console.log(files);
+      if (files === undefined) {
+        return false;
+      }
+
       if (!e.target.files) {
         alert('ファイルを選択してください');
         return false;
@@ -19,13 +24,17 @@ export const FileProvider: React.FC<Props> = ({ imgLabel, setFile, src }) => {
         alert('ファイル形式はjpegのみです');
         return false;
       }
-
+      console.log(files);
       reader.readAsDataURL(files);
+      console.log(files);
+
       reader.onload = () => {
         setFile(reader.result);
+        console.log(reader.result);
       };
 
       setFile(files.name);
+      console.log(files.name);
     }
   };
 
