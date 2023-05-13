@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Title } from '../../../components/atoms/Title';
-
 import { UserIdContext } from '../../../utils/useridContext';
 import { useLocation } from 'react-router-dom';
 import { DetailArea } from '../../../components/organisms/article/PostForm/Detail';
 import { AddHeder } from '../../../components/organisms/article/PostForm/modules/AddHeder';
+import { useApi } from '../../../utils/useApi';
 
 type state = {
   title: string;
@@ -21,47 +21,63 @@ export const Detail: React.FC = () => {
   const [content, setContent] = useState('');
   const location = useLocation();
   const state = location.state as state;
+  const { data, ApiFunction } = useApi();
 
   setInfoStatus(true);
+
   useEffect(() => {
-    if (location.state === 'add') {
-      const LoginPost = async () => {
-        const infoSetting = {
+    const detailApi = async () => {
+      await ApiFunction({
+        url: '/articles/' + userId,
+        config: {
           method: 'GET',
-        };
-        String(userId);
-        const url = '/articles/' + userId;
-
-        try {
-          const res = await fetch(url, infoSetting);
-          const data = await res.json();
-          setName(data.user_name);
-          setTitle(data.title);
-          setContent(data.content);
-
-          setArticles([
-            ...articles,
-            {
-              article_id: data.article_id,
-              title: data.title,
-              content: data.content,
-              created_at: data.created_at,
-              updated_at: data.updated_at,
-              user_name: data.user_name,
-            },
-          ]);
-        } catch (e) {
-          console.log(e, 'ミス');
-        }
-      };
-      LoginPost();
+        },
+      });
+    };
+    if (location.state === 'add') {
+      detailApi();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const dataDetail: string[] = Object.values(data ?? {});
+
+  useEffect(() => {
+    const Api = async () => {
+      setName(String(dataDetail[2]));
+    };
+    if (location.state === 'add') {
+      Api();
+    }
+
+    setName(dataDetail[2]);
+    setTitle(dataDetail[0]);
+    setContent(dataDetail[1]);
+    if (
+      dataDetail[0] !== '' &&
+      dataDetail[0] !== undefined &&
+      dataDetail[0] !== 'TypeError'
+    ) {
+      setArticles([
+        ...articles,
+        {
+          article_id: Number(dataDetail[3]),
+          title: dataDetail[0],
+          content: dataDetail[1],
+          created_at: dataDetail[4],
+          updated_at: dataDetail[5],
+          user_name: dataDetail[2],
+        },
+      ]);
+    }
+
     if (state.page === 'list') {
       setName(state.name);
       setContent(state.content);
       setTitle(state.title);
     }
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   return (
     <div>

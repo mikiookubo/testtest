@@ -2,11 +2,11 @@ import { useContext, useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Button } from '../../components/atoms';
 import { Title } from '../../components/atoms/Title';
-
 import { TextArea } from '../../components/organisms/login/TextArea';
 import { paths } from '../../utils/paths';
 import { UserIdContext } from '../../utils/useridContext';
 import { Heder } from '../../components/organisms/article/PostForm/modules/Heder';
+import { useApi } from '../../utils/useApi';
 
 export const LoginTop = () => {
   const [access_token, setAccess_token] = useState('');
@@ -15,106 +15,94 @@ export const LoginTop = () => {
   const valueText = { login: '', password: '' };
   const [textValue, setTextValue] = useState(valueText);
   const [isDisabled, setIsDisabled] = useState(true);
-  const { setLoginStatus } = useContext(UserIdContext);
-  let infoData: any;
   const pageDate = sessionStorage.getItem('page');
+  const { setLoginStatus } = useContext(UserIdContext);
+  const { data, ApiFunction, setData } = useApi();
+  const dataDetail: string[] = Object.values(data ?? {});
 
-  const onClick = () => {
-    let dataReqest: any;
-    const LoginPost = async () => {
-      const infoSetting = {
-        method: 'GET',
-      };
-      try {
-        const res = await fetch('/user', infoSetting);
-        infoData = await res.json();
-        dataReqest = {
-          email: infoData.email,
-          password: infoData.password,
-          name: infoData.name,
-          representative_image: infoData.representative_image,
-          user_id: infoData.user_id,
-          created_at: infoData.created_at,
-          updated_at: infoData.updated_at,
-          deleted_at: infoData.deleted_at,
-          token: infoData.token,
-        };
-      } catch (e) {
-        console.log(e, 'ミス');
+  useEffect(() => {
+    if (
+      textValue.login === 'okubomk0012@gmail.com' &&
+      textValue.password === 'kkkkkkkkkkkk9'
+    ) {
+      setData({
+        email: 'okubomk0012@gmail.com',
+        password: 'kkkkkkkkkkkk9',
+        name: 'リアクト太郎',
+        representative_image: 'https://source.unsplash.com/gLDgbaTOi1w',
+        user_id: '6850e3be-ff6a-4706-9157-d2bab23ff47d',
+
+        created_at: '2022-03-29T01:45:22.000000Z',
+        updated_at: '2022-03-29T01:45:22.000000Z',
+        deleted_at: null,
+        token: '4|tPK6mcUklKR26ngBcRwdPEhVwGn5vJrY9B5gNSir',
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [textValue]);
+
+  const onClick = async () => {
+    const email = dataDetail[0];
+    const password = dataDetail[1];
+    const token: string = dataDetail[7];
+
+    if (data) {
+      await ApiFunction({
+        url: '/login',
+        config: {
+          method: 'post',
+          headers: { Authorization: `Bearer : ${access_token}` },
+          body: JSON.stringify(data),
+        },
+      });
+    }
+
+    if (location.state === null && !pageDate) {
+      if (email !== textValue.login) {
+        alert('メールアドレスかパスワードが間違えています');
+        return;
+      } else if (password !== textValue.password) {
+        alert('メールアドレスかパスワードが間違えています');
+        return;
       }
-
+    }
+    if (location.state === 'info' || pageDate) {
       if (
-        textValue.login === 'okubomk0012@gmail.com' &&
-        textValue.password === 'kkkkkkkkkkkk9'
+        email !== textValue.login &&
+        'okubomk0012@gmail.com' !== textValue.login
       ) {
-        dataReqest = {
-          user_id: '6850e3be-ff6a-4706-9157-d2bab23ff47d',
-          name: 'リアクト太郎',
-          email: 'okubomk0012@gmail.com',
-          password: 'kkkkkkkkkkkk9',
-          created_at: '2022-03-29T01:45:22.000000Z',
-          updated_at: '2022-03-29T01:45:22.000000Z',
-          deleted_at: null,
-          representative_image: 'https://source.unsplash.com/gLDgbaTOi1w',
-          token: '4|tPK6mcUklKR26ngBcRwdPEhVwGn5vJrY9B5gNSir',
-        };
+        alert('メールアドレスかパスワードが間違えています');
+        return;
+      } else if (
+        password !== textValue.password &&
+        'kkkkkkkkkkkk9' !== textValue.password
+      ) {
+        alert('メールアドレスかパスワードが間違えています');
+        return;
       }
-
-      const url = '/login/';
-      const setting = {
-        method: 'post',
-        headers: { Authorization: `Bearer : ${access_token}` },
-        body: JSON.stringify(dataReqest),
-      };
-      try {
-        const res = await fetch(url, setting);
-        const data = await res.json();
-
-        if (location.state === null && !pageDate) {
-          if (res.status === 404) {
-            alert('サーバーにアクセス出来ません。');
-            return;
-          } else if (data.user.email !== textValue.login) {
-            alert('メールアドレスかパスワードが間違えています');
-            return;
-          } else if (data.user.password !== textValue.password) {
-            alert('メールアドレスかパスワードが間違えています');
-            return;
-          }
-        }
-
-        if (location.state === 'info' || pageDate) {
-          if (
-            infoData.email !== textValue.login &&
-            'okubomk0012@gmail.com' !== textValue.login
-          ) {
-            alert('メールアドレスかパスワードが間違えています');
-            return;
-          } else if (
-            infoData.password !== textValue.password &&
-            'kkkkkkkkkkkk9' !== textValue.password
-          ) {
-            alert('メールアドレスかパスワードが間違えています');
-            return;
-          }
-        }
-
-        setAccess_token(data.user.token);
-        setLoginStatus(true);
-
-        naviGate(paths.mypage, { state: { id: 'ww' } });
-      } catch (e) {
-        console.log(e);
-      }
-      return;
-    };
-
-    LoginPost();
+    }
+    setAccess_token(token);
+    setLoginStatus(true);
+    naviGate(paths.myPage, { state: { id: 'ww' } });
   };
 
   useEffect(() => {
+    const userGetApi = async () => {
+      await ApiFunction({
+        url: '/user',
+        config: {
+          method: 'GET',
+        },
+      });
+    };
+    userGetApi();
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  useEffect(() => {
     const date = new Date();
-    const nowDate = Math.floor(date.getTime() / 1000); //getTime()はミリ秒を返すので1000で割る
+    const nowDate = Math.floor(date.getTime() / 1000);
     const expire = nowDate + 3600;
     // オブジェクト値をJSON文字列に変換してStorageに保存
     const p = { access_token: access_token, age: expire };

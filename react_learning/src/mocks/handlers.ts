@@ -41,10 +41,9 @@ export const handlers = [
     );
   }),
 
-  rest.post('user', async (req, res, ctx) => {
+  rest.post('user', (req, res, ctx) => {
     const dataBody = req.body;
     infoData = JSON.parse(dataBody as string);
-    console.log(infoData.representative_image);
 
     return res(
       ctx.status(201),
@@ -64,7 +63,7 @@ export const handlers = [
 
   rest.get('user', (req, res, ctx) => {
     const key = localStorage.getItem('key');
-    if (!key) {
+    if (!key || !infoData) {
       return;
     }
     return res(
@@ -122,6 +121,9 @@ export const handlers = [
     );
   }),
   rest.get('/articles/:' + articlesId, (req, res, ctx) => {
+    if (!articlesData) {
+      return;
+    }
     return res(
       ctx.status(201),
       ctx.json({

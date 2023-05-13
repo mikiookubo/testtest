@@ -25,14 +25,14 @@ type Props = {
 };
 
 export const TextArea: FC<Props> = ({ setTextValueP, setIsDisabledP }) => {
-  const [textValue, setTextValuel] = useState(valueForm);
+  const [textValue, setTextValue] = useState(valueForm);
   const [error, setError] = useState(errorForm);
-  const [isDisabled, setIsDisabledl] = useState(true);
+  const [isDisabled, setIsDisabled] = useState(true);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const kye = e.target.name;
     const value = e.target.value;
-    setTextValuel((prev) => ({ ...prev, [kye]: value }));
+    setTextValue((prev) => ({ ...prev, [kye]: value }));
     setError((prev) => ({
       ...prev,
       [kye]: formValidate(kye, value, textValue.password),
@@ -41,13 +41,16 @@ export const TextArea: FC<Props> = ({ setTextValueP, setIsDisabledP }) => {
 
   useEffect(() => {
     if (!textValue.login || !textValue.password) {
-      setIsDisabledl(true);
+      setIsDisabled(true);
     } else if (!error.login && !error.password) {
-      setIsDisabledl(false);
-    } else setIsDisabledl(true);
+      setIsDisabled(false);
+    } else setIsDisabled(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
-  setTextValueP(textValue);
-  setIsDisabledP(isDisabled);
+  useEffect(() => {
+    setTextValueP(textValue);
+    setIsDisabledP(isDisabled);
+  });
 
   return (
     <div>

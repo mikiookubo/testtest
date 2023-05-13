@@ -1,4 +1,7 @@
-import { FC } from 'react';
+import { FC, useContext } from 'react';
+import { Link } from 'react-router-dom';
+import { paths } from '../../../../utils/paths';
+import { UserIdContext } from '../../../../utils/useridContext';
 
 type articlesType = {
   articleList?: {
@@ -12,6 +15,7 @@ type articlesType = {
 };
 
 export const ArticlesList: FC<articlesType> = ({ articleList }) => {
+  const { userId } = useContext(UserIdContext);
   return (
     <div>
       {(() => {
@@ -19,17 +23,25 @@ export const ArticlesList: FC<articlesType> = ({ articleList }) => {
 
         for (let i = 0; i < 20; i++) {
           list.push(
-            <>
-              <tr>
-                <td className="border-black border border-solid w-1/4 h-6">
-                  {articleList ? articleList[i]?.title : ''}
-                </td>
+            <tr>
+              <td className="border-black border border-solid w-1/4 h-6">
+                {articleList ? articleList[i]?.title : ''}
+              </td>
 
-                <td className="border-black border border-solid h-6">
+              <td className="border-black border border-solid h-6">
+                <Link
+                  to={paths.articles.detail(String(userId))}
+                  state={{
+                    page: 'list',
+                    name: articleList ? articleList[i]?.user_name : '',
+                    content: articleList ? articleList[i]?.content : '',
+                    title: articleList ? articleList[i]?.title : '',
+                  }}
+                >
                   {articleList ? articleList[i]?.content : ''}
-                </td>
-              </tr>
-            </>
+                </Link>
+              </td>
+            </tr>
           );
         }
         return (

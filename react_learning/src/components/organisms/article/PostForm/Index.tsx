@@ -6,6 +6,7 @@ import { LabelAndTextInput, LabelAndTextArea } from '../../../molecules';
 import { reducer } from './modules/reducer';
 import type { InputForm } from './modules/types';
 import { UserIdContext } from '../../../../utils/useridContext';
+import { useApi } from '../../../../utils/useApi';
 
 export const requiredError = '必須入力です';
 export const initialState: InputForm = {
@@ -22,6 +23,7 @@ export const initialState: InputForm = {
   },
 };
 export const PostForm: React.FC = () => {
+  const { ApiFunction } = useApi();
   const navigate = useNavigate();
   const [formState, dispatch] = useReducer(reducer, initialState);
   const { userId, setUserId } = useContext(UserIdContext);
@@ -32,6 +34,7 @@ export const PostForm: React.FC = () => {
     if (!title.isDisabled && !description.isDisabled) {
       setIsDisabled(false);
     } else setIsDisabled(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [title.value, description.value]);
 
   const clickPostButton = async () => {
@@ -54,27 +57,21 @@ export const PostForm: React.FC = () => {
       created_at: '2021-05-01T06:30:09.123Z',
       updated_at: '2021-05-01T06:30:09.123Z',
     };
-
-    const url = '/articles';
-    const setting = {
-      method: 'post',
-      body: JSON.stringify(data),
+    const te = async () => {
+      await ApiFunction({
+        url: '/articles',
+        config: {
+          method: 'post',
+          body: JSON.stringify(data),
+        },
+      });
     };
-    try {
-      const res = await fetch(url, setting);
+    te();
 
-      if (res.status === 404) {
-        alert('サーバーにアクセス出来ません。');
-        return;
-      }
+    navigate(paths.articles.detail(userId + ''), { state: 'add' });
 
-      navigate(paths.articles.detail(userId + ''), { state: 'add' });
-    } catch (e) {
-      console.log(e);
-    }
     return;
   };
-  console.log(isDisabled);
 
   return (
     <div>

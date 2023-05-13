@@ -1,9 +1,12 @@
-import { FC, VFC, useEffect, useState } from 'react';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { paths } from './paths';
 
-export const UseApi = () => {
-  const [data, setData] = useState();
-  const [res, setRes] = useState();
-  const aa = async (props: {
+export const useApi = () => {
+  const [data, setData] = useState<Response | {}>();
+
+  const naviGate = useNavigate();
+  const ApiFunction = async (props: {
     url: string;
     config: {
       method: string;
@@ -14,15 +17,14 @@ export const UseApi = () => {
     };
   }) => {
     const res = await fetch(props.url, props.config);
-    const resData: any = await res.json();
+    const resData = await res.json();
+
     setData(resData);
+
+    if (props.url === undefined) {
+      naviGate(paths.notfound);
+    }
   };
 
-  // const [data, setData] = useState();
-
-  // console.log(resData.email);
-  // console.log(resData, 'フックのデータ');
-  // setData(resData);
-  console.log('apiたたけてる');
-  return { data, aa, res };
+  return { data, ApiFunction, setData };
 };

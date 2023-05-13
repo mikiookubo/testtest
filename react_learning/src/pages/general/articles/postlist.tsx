@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import { UserIdContext } from '../../../utils/useridContext';
-
 import { Title } from '../../../components/atoms/Title';
 import { ArticlesList } from '../../../components/organisms/article/PostForm/PostList';
 import { PageArticleButton } from '../../../components/organisms/article/PostForm/PageButton';
 import { AddHeder } from '../../../components/organisms/article/PostForm/modules/AddHeder';
+import { useApi } from '../../../utils/useApi';
 type articlesType = {
   article_id: number;
   title: string;
@@ -20,18 +20,16 @@ type isDisabledType = {
 
 export const PostList = () => {
   const [lastPage, setLastPage] = useState('1');
-  const [pageNum, setPageNum] = useState<number | null>();
+  const [pageNum, setPageNum] = useState<number | null>(1);
   const [isDisabled, setIsDisabled] = useState<isDisabledType>({
     next: false,
     prev: true,
   });
   const [articleList, setArticleList] = useState<articlesType[]>();
-
   const { articles } = useContext(UserIdContext);
   const [currentPage, setCurrentPage] = useState<number>(1);
-
   const articlesNumber = articles.length;
-  // const page = Math.ceil(articlesNumber / 20);
+  const { ApiFunction } = useApi();
 
   useEffect(() => {
     if (articlesNumber <= 21) {
@@ -62,24 +60,17 @@ export const PostList = () => {
     } else if (currentPage === 5) {
       setArticleList(articles.slice(81, 101));
     }
-    console.log(currentPage);
+
     if (currentPage === 1) {
-      console.log(currentPage, 'ボタン活性ステートの現在ページ');
       setIsDisabled({ ...isDisabled, prev: true, next: false });
-      console.log(isDisabled?.prev, '前へボタンの活性化');
-      console.log(isDisabled?.next, '次へボタンの活性化');
     } else if (currentPage <= 2) {
-      console.log(currentPage, 'ボタン活性ステートの現在ページ');
       setIsDisabled({ ...isDisabled, prev: false, next: false });
     } else if (currentPage === 5) {
-      console.log(currentPage, 'ボタン活性ステートの現在ページ');
       setIsDisabled({ ...isDisabled, prev: false, next: true });
     }
-    console.log(isDisabled?.prev, '前へボタンの活性化');
-    console.log(isDisabled?.next, '次へボタンの活性化');
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentPage]);
-  console.log(isDisabled?.prev, '前へボタンの活性化');
-  console.log(isDisabled?.next, '次へボタンの活性化');
 
   const dataRequest = {
     total: articlesNumber,
@@ -97,46 +88,41 @@ export const PostList = () => {
     data: articles,
   };
   useEffect(() => {
+    const detailApi = async () => {
+      await ApiFunction({
+        url: '/articlelist/',
+        config: {
+          method: 'post',
+          body: JSON.stringify(dataRequest),
+        },
+      });
+    };
+    detailApi();
     const articlePost = async () => {
-      const postSetting = {
-        method: 'post',
-        body: JSON.stringify(dataRequest),
-      };
-      try {
-        await fetch('/articlelist/', postSetting);
-      } catch (e) {
-        console.log(e);
-      }
-
-      const url = '/articles?page=' + String(pageNum);
-
-      const getSetting = {
-        method: 'GET',
-      };
-      try {
-        await fetch(url, getSetting);
-      } catch (e) {
-        console.log(e);
-      }
+      await ApiFunction({
+        url: '/articles?page=' + String(pageNum),
+        config: {
+          method: 'GET',
+        },
+      });
     };
     articlePost();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageNum]);
-
-  useEffect(() => {}, [isDisabled]);
 
   // 次へボタンクリック処理
   const Next = () => {
     setCurrentPage((prev) => prev + 1);
-    console.log(currentPage, '次へボタンおし現在のページ');
+
     if (currentPage === 5) {
       return false;
     }
   };
-  console.log(currentPage, '現在のページ');
+
   // 前ボタンクリック処理
   const prev = () => {
     setCurrentPage(currentPage - 1);
-    console.log(currentPage, '現在のページ');
+
     if (currentPage === 1) {
       return false;
     }

@@ -1,40 +1,44 @@
-import { useContext, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { MyPageArea } from '../../components/organisms/mypage/MypageArea';
-import { UserIdContext } from '../../utils/useridContext';
 
 import { AddHeder } from '../../components/organisms/article/PostForm/modules/AddHeder';
+import { useApi } from '../../utils/useApi';
 
-export const Mypage = () => {
-  const { setInfoStatus } = useContext(UserIdContext);
+export const MyPage = () => {
   const [value, setValue] = useState('');
   const [src, setSrc] = useState('');
 
-  setInfoStatus(true);
   const userId = localStorage.getItem('useId');
-
-  const InfoPost = async () => {
-    const setting = {
-      method: 'GET',
-      header: 'Content-Type: application/json; charset=utf-8',
+  const { data, ApiFunction } = useApi();
+  useEffect(() => {
+    const myPageApi = async () => {
+      await ApiFunction({
+        url: `/user/:${userId}`,
+        config: {
+          method: 'GET',
+        },
+      });
     };
+    myPageApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
-    try {
-      const res = await fetch(`/user/:${userId}`, setting);
-      const data = await res.json();
+  useEffect(() => {
+    const dataDetail: string[] = Object.values(data ?? {});
+    const img: string = dataDetail[2];
+    const email = dataDetail[0];
 
-      if (data.representative_image.slice(0, 7) === '/9j/4AA') {
-        setSrc('data:image/jpeg;base64,' + data.representative_image);
+    if (img !== undefined) {
+      if (img.slice(0, 7) === '/9j/4AA') {
+        setSrc('data:image/JPEG;base64,' + img);
       } else {
-        setSrc(data.representative_image);
+        setSrc(img);
       }
 
-      setValue(data.email);
-    } catch (e) {
-      console.log(e, 'ミス');
+      setValue(email);
     }
-  };
-  InfoPost();
+  }, [data]);
 
   return (
     <div>

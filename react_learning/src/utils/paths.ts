@@ -5,11 +5,11 @@ export const paths = {
   general: '/general',
   loginTop: '/loginTop',
   infoTop: '/infoTop',
-  mypage: '/myPage',
+  myPage: '/myPage',
 
-  infochange: '/infoChange',
+  infoChange: '/infoChange',
 
-  postlist: '/myPage/postlist',
+  postList: '/myPage/postlist',
 
   notfound: '*',
   article: {

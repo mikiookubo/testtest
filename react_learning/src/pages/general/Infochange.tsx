@@ -1,15 +1,14 @@
 import { Button } from '../../components/atoms';
 import { Title } from '../../components/atoms/Title';
 import { SimpleLabelAndTextInput } from '../../components/molecules/SimpleLabelAndTextInput';
-
 import { FileProvider } from '../../components/organisms/info/FileContext';
 import { useEffect, useState } from 'react';
-
-import icon from '../../img/icon2.jpg';
 import { formValidate } from '../../validation/ErrorObject';
 import { paths } from '../../utils/paths';
 import { useNavigate } from 'react-router-dom';
 import { AddHeder } from '../../components/organisms/article/PostForm/modules/AddHeder';
+import { useApi } from '../../utils/useApi';
+
 export const InfoChange = () => {
   type ValueFormType = {
     name: string;
@@ -26,11 +25,26 @@ export const InfoChange = () => {
     name: '',
     representative_image: '',
   };
+  const userId = localStorage.getItem('useId');
+  useEffect(() => {
+    const myPageApi = async () => {
+      await ApiFunction({
+        url: `/user/:${userId}`,
+        config: {
+          method: 'GET',
+        },
+      });
+    };
+    myPageApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const [textValue, setTextValue] = useState<ValueFormType>(valueForm);
   const [isDisabled, setIsDisabled] = useState(true);
   const [error, setError] = useState(errorForm);
-  const [file, setFile] = useState<string>(icon);
+  const [file, setFile] = useState<string>('');
   const naviGate = useNavigate();
+  const { ApiFunction, data } = useApi();
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const kye = e.target.name;
@@ -41,7 +55,18 @@ export const InfoChange = () => {
       [kye]: formValidate(kye, value),
     }));
   };
+  useEffect(() => {
+    const dataDetail: string[] = Object.values(data ?? {});
+    const img: string = dataDetail[2];
 
+    if (img !== undefined) {
+      if (img.slice(0, 7) === '/9j/4AA') {
+        setFile('data:image/JPEG;base64,' + img);
+      } else {
+        setFile(img);
+      }
+    }
+  }, [data]);
   const onClick = () => {
     const userId = localStorage.getItem('useId');
     const fileData = file.replace(/^data:\w+\/\w+;base64,/, '');
@@ -51,25 +76,18 @@ export const InfoChange = () => {
       email: textValue.email,
       representative_image: fileData,
     };
-    const setting = {
-      method: 'put',
-      body: JSON.stringify(request),
-    };
 
     const infoPut = async () => {
-      try {
-        const res = await fetch(`/user/:${userId}`, setting);
+      await ApiFunction({
+        url: `/user/:${userId}`,
+        config: {
+          method: 'put',
+          body: JSON.stringify(request),
+        },
+      });
 
-        if (!res.ok) {
-          throw new Error('非同期に失敗');
-        } else if (res.status === 500) {
-          alert('サーバーにエラーが発生しました。');
-        }
-      } catch (e) {
-        alert('失敗');
-      }
       sessionStorage.setItem('page', 'change');
-      naviGate(paths.mypage, { state: { id: 'ww' } });
+      naviGate(paths.myPage, { state: { id: 'ww' } });
     };
 
     infoPut();
@@ -81,6 +99,7 @@ export const InfoChange = () => {
     } else if (!error.email && !error.name) {
       setIsDisabled(false);
     } else setIsDisabled(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
   return (
     <div>

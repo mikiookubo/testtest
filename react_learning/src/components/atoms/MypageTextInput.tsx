@@ -10,6 +10,7 @@ export const MyPageTextInput: React.FC<Props> = ({ value }) => {
         className="border border-gray w-full p-1.5 ml-3"
         type={'text'}
         value={value}
+        readOnly={true}
       />
     </div>
   );

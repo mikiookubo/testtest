@@ -10,7 +10,7 @@ export const FileProvider: React.FC<Props> = ({ imgLabel, setFile, src }) => {
 
     if (e.currentTarget.files !== null) {
       const files = e.currentTarget.files[0];
-      console.log(files);
+
       if (files === undefined) {
         return false;
       }
@@ -24,23 +24,20 @@ export const FileProvider: React.FC<Props> = ({ imgLabel, setFile, src }) => {
         alert('ファイル形式はjpegのみです');
         return false;
       }
-      console.log(files);
+
       reader.readAsDataURL(files);
-      console.log(files);
 
       reader.onload = () => {
         setFile(reader.result);
-        console.log(reader.result);
       };
 
       setFile(files.name);
-      console.log(files.name);
     }
   };
 
   return (
-    <div className="text-center">
-      <label className="inline">
+    <div className="w-1/4 m-auto text-center">
+      <label className="inline text-sm">
         <img
           className="m-auto w-24 h-24 rounded-full"
           src={src}

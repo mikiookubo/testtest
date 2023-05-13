@@ -13,7 +13,6 @@ export const Heder: React.FC = () => {
     localStorage.removeItem('key');
     setLoginStatus(false);
   };
-  console.log(open);
 
   return (
     <header id="heder" className="bg-gray-400 pt-8 sm:pt-16">

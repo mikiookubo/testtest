@@ -61,6 +61,7 @@ export const TextArea: FC<Props> = ({ setTextValueP, setIsDisabledP }) => {
     ) {
       setIsDisabled(false);
     } else setIsDisabled(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [error]);
   setTextValueP(textValue);
   setIsDisabledP(isDisabled);

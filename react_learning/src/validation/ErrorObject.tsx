@@ -30,7 +30,7 @@ const passwordCheckValidation = (passwordCheck: string, password?: string) => {
 const nameValidation = (name: string) => {
   if (!name) return '名前を入力してください';
 
-  if (name.length <= 8) {
+  if (name.length < 8) {
     return '8文字以上で入力してください';
   }
   return (name = '');
