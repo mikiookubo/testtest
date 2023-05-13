@@ -60,7 +60,7 @@ export const InfoChange = () => {
     const img: string = dataDetail[2];
 
     if (img !== undefined) {
-      if (img.slice(0, 7) === '/9j/4AA') {
+      if (img.slice(0, 3) === '/9j') {
         setFile('data:image/JPEG;base64,' + img);
       } else {
         setFile(img);
@@ -103,7 +103,7 @@ export const InfoChange = () => {
   }, [error]);
   return (
     <div>
-      <AddHeder></AddHeder>
+      <AddHeder />
       <Title>会員情報</Title>
       <SimpleLabelAndTextInput
         labelTitle="ログインID (メールアドレス)"

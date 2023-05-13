@@ -34,7 +34,7 @@ export const Detail: React.FC = () => {
         },
       });
     };
-    if (location.state === 'add') {
+    if (state.page === 'add') {
       detailApi();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,7 +46,7 @@ export const Detail: React.FC = () => {
     const Api = async () => {
       setName(String(dataDetail[2]));
     };
-    if (location.state === 'add') {
+    if (state.page === 'add') {
       Api();
     }
 
@@ -81,7 +81,7 @@ export const Detail: React.FC = () => {
 
   return (
     <div>
-      <AddHeder></AddHeder>
+      <AddHeder />
       <Title>詳細画面</Title>
       <div className="w-9/12 m-auto">
         <DetailArea name={name} title={title} content={content}></DetailArea>

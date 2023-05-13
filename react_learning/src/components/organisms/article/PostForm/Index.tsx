@@ -38,6 +38,21 @@ export const PostForm: React.FC = () => {
   }, [title.value, description.value]);
 
   const clickPostButton = async () => {
+    const date = new Date();
+    const dateRequest =
+      date.getFullYear() +
+      '-' +
+      ('0' + (date.getMonth() + 1)).slice(-2) +
+      '-' +
+      ('0' + date.getDate()).slice(-2) +
+      'T' +
+      ('0' + date.getHours()).slice(-2) +
+      ':' +
+      ('0' + date.getMinutes()).slice(-2) +
+      ':' +
+      ('0' + date.getSeconds()).slice(-2) +
+      '.' +
+      date.getMilliseconds();
     setUserId(userId + 1);
     if (!shouldShowError) {
       dispatch({
@@ -54,8 +69,7 @@ export const PostForm: React.FC = () => {
       title: formState.title.value,
       content: formState.description.value,
       article_id: userId,
-      created_at: '2021-05-01T06:30:09.123Z',
-      updated_at: '2021-05-01T06:30:09.123Z',
+      created_at: dateRequest,
     };
     const te = async () => {
       await ApiFunction({

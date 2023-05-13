@@ -30,11 +30,12 @@ export const MyPage = () => {
     const email = dataDetail[0];
 
     if (img !== undefined) {
-      if (img.slice(0, 7) === '/9j/4AA') {
-        setSrc('data:image/JPEG;base64,' + img);
+      if (img.slice(0, 3) === '/9j') {
+        setSrc('data:image/jpeg;base64,' + img);
       } else {
         setSrc(img);
       }
+      console.log(img);
 
       setValue(email);
     }
@@ -42,7 +43,7 @@ export const MyPage = () => {
 
   return (
     <div>
-      <AddHeder></AddHeder>
+      <AddHeder />
       <MyPageArea value={value} src={src}></MyPageArea>
     </div>
   );

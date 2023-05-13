@@ -12,20 +12,39 @@ const emailValidation = (email: string) => {
 
   return (email = '');
 };
-const passwordValidation = (password: string, passwordCheck?: string) => {
-  if (!password) return 'パスワードを入力してください';
-  if (passwordCheck === password) return '';
+const passwordValidation = (
+  type: string,
+  textValue: string,
+  password?: string,
+  passwordCheck?: string
+) => {
+  if (!textValue) return 'パスワードを入力してください';
 
-  if (!errorobj.passwordCheck.test(password))
+  if (passwordCheck === textValue) return '';
+
+  if (!errorobj.passwordCheck.test(textValue)) {
     return '正しくパスワードを入力してください';
-  return (password = '');
+  }
+  if (!passwordCheck) return '';
+  if (passwordCheck !== password) {
+    console.log(444);
+
+    return 'パスワードが一致しません';
+  } else {
+  }
 };
-const passwordCheckValidation = (passwordCheck: string, password?: string) => {
-  if (password !== passwordCheck) return 'パスワードが一致しません';
 
-  if (!errorobj.passwordCheck.test(password))
-    return '正しくパスワードを入力してください';
-  return (password = '');
+export const passwordCheckValidation = (
+  textValue: string,
+  password?: string
+) => {
+  if (password !== textValue) return 'パスワードが一致しません';
+  if (password === textValue) {
+    password = '';
+  }
+
+  // if (!errorobj.passwordCheck.test(password))
+  //   return '正しくパスワードを入力してください';
 };
 const nameValidation = (name: string) => {
   if (!name) return '名前を入力してください';
@@ -35,15 +54,20 @@ const nameValidation = (name: string) => {
   }
   return (name = '');
 };
-export const formValidate = (type: string, value: string, values?: string) => {
+export const formValidate = (
+  type: string,
+  textValue: string,
+  password?: string,
+  passwordCheck?: string
+) => {
   switch (type) {
     case 'login':
-      return emailValidation(value);
+      return emailValidation(textValue);
     case 'password':
-      return passwordValidation(value, values);
+      return passwordValidation(type, textValue, password, passwordCheck);
     case 'passwordCheck':
-      return passwordCheckValidation(value, values);
+      return passwordCheckValidation(textValue, password);
     case 'name':
-      return nameValidation(value);
+      return nameValidation(textValue);
   }
 };

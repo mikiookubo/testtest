@@ -1,6 +1,10 @@
 import { FC, useEffect, useState } from 'react';
 import { SimpleLabelAndTextInput } from '../../molecules/SimpleLabelAndTextInput';
-import { formValidate } from '../../../validation/ErrorObject';
+import {
+  formValidate,
+  passwordCheckValidation,
+} from '../../../validation/ErrorObject';
+
 import React from 'react';
 
 const errorForm = {
@@ -34,6 +38,7 @@ export const TextArea: FC<Props> = ({ setTextValueP, setIsDisabledP }) => {
   const [textValue, setTextValue] = useState(valueForm);
   const [error, setError] = useState(errorForm);
   const [isDisabled, setIsDisabled] = useState(true);
+  const [passwordDisabled, setPasswordDisabled] = useState(true);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>): void => {
     const kye = e.target.name;
@@ -41,11 +46,26 @@ export const TextArea: FC<Props> = ({ setTextValueP, setIsDisabledP }) => {
     setTextValue((prev) => ({ ...prev, [kye]: value }));
     setError((prev) => ({
       ...prev,
-      [kye]: formValidate(kye, value, textValue.password),
+      [kye]: formValidate(
+        kye,
+        value,
+        textValue.password,
+        textValue.passwordCheck
+      ),
     }));
   };
-
+  const a = () => {
+    if (!textValue.passwordCheck)
+      if (textValue.passwordCheck !== textValue.password) {
+        setError((prev) => ({ ...prev, password: 'パスワードが一致しません' }));
+      } else {
+        setError((prev) => ({ ...prev, password: '' }));
+      }
+  };
   useEffect(() => {
+    if (textValue.password && !error.password) {
+      setPasswordDisabled(false);
+    }
     if (
       !textValue.login ||
       !textValue.name ||
@@ -80,13 +100,15 @@ export const TextArea: FC<Props> = ({ setTextValueP, setIsDisabledP }) => {
         value={textValue.password}
         name="password"
         onChange={onChange}
+        onBlue={a}
       />
       <SimpleLabelAndTextInput
         labelTitle="パスワード確認"
-        ErrorMessage={error.passwordCheck}
+        ErrorMessage={error && error.passwordCheck}
         value={textValue.passwordCheck}
         name="passwordCheck"
         onChange={onChange}
+        disabled={passwordDisabled}
       />
       <SimpleLabelAndTextInput
         labelTitle="ニックネーム(8文字以上)"

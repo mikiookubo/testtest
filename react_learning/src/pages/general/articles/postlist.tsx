@@ -20,14 +20,14 @@ type isDisabledType = {
 
 export const PostList = () => {
   const [lastPage, setLastPage] = useState('1');
-  const [pageNum, setPageNum] = useState<number | null>(1);
+  const [pageNum, setPageNum] = useState(1);
   const [isDisabled, setIsDisabled] = useState<isDisabledType>({
     next: false,
     prev: true,
   });
   const [articleList, setArticleList] = useState<articlesType[]>();
   const { articles } = useContext(UserIdContext);
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [currentPage, setCurrentPage] = useState(1);
   const articlesNumber = articles.length;
   const { ApiFunction } = useApi();
 
@@ -130,18 +130,18 @@ export const PostList = () => {
 
   return (
     <>
-      <AddHeder></AddHeder>
+      <AddHeder />
       <Title>投稿一覧画面</Title>
 
       <div className="w-9/12 m-auto">
-        <ArticlesList articleList={articleList}></ArticlesList>
+        <ArticlesList articleList={articleList} />
         <PageArticleButton
           setCurrentPage={setCurrentPage}
           prevOnClick={prev}
           nextDisabled={isDisabled.next}
           prevDisabled={isDisabled.prev}
           nextOnClick={Next}
-          lastPage={lastPage}
+          lastPage={lastPage ?? ''}
         />
       </div>
     </>

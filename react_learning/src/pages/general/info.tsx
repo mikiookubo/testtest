@@ -44,7 +44,8 @@ export const InfoTop = () => {
     for (let i = 0; i < 35; i++) {
       user_id += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-
+    console.log(file);
+    console.log(fileData);
     const date = new Date();
     const dateRequest =
       date.getFullYear() +
@@ -103,7 +104,7 @@ export const InfoTop = () => {
   }, []);
   return (
     <div>
-      <Heder></Heder>
+      <Heder />
       <Title>会員情報</Title>
       <div className="w-9/12 m-auto">
         <div className="mt-4">

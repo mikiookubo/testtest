@@ -126,7 +126,7 @@ export const LoginTop = () => {
 
   return (
     <div className="">
-      <Heder></Heder>
+      <Heder />
       <Title>ログイン</Title>
 
       <div className="w-9/12 m-auto">

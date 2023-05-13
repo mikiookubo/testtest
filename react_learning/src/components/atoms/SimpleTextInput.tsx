@@ -5,8 +5,9 @@ type Props = {
   name: string;
   placeholder?: string;
   ErrorMessage: string;
-
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled?: boolean;
+  onBlue?: React.FocusEventHandler<HTMLInputElement>;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 export const SimpleTextInput: React.FC<Props> = ({
   value,
@@ -14,6 +15,8 @@ export const SimpleTextInput: React.FC<Props> = ({
   onChange,
   placeholder,
   ErrorMessage,
+  disabled,
+  onBlue,
 }) => {
   return (
     <div>
@@ -24,6 +27,8 @@ export const SimpleTextInput: React.FC<Props> = ({
         name={name}
         onChange={onChange}
         placeholder={placeholder}
+        disabled={disabled}
+        onBlur={onBlue}
       />
       <p className="text-red-600">{ErrorMessage}</p>
     </div>
