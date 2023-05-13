@@ -55,12 +55,12 @@ export const TextArea: FC<Props> = ({ setTextValueP, setIsDisabledP }) => {
     }));
   };
   const a = () => {
-    if (!textValue.passwordCheck)
-      if (textValue.passwordCheck !== textValue.password) {
-        setError((prev) => ({ ...prev, password: 'パスワードが一致しません' }));
-      } else {
-        setError((prev) => ({ ...prev, password: '' }));
-      }
+    if (!textValue.passwordCheck) {
+      return;
+    }
+    if (textValue.passwordCheck === textValue.password) {
+      setError((prev) => ({ ...prev, password: '', passwordCheck: '' }));
+    }
   };
   useEffect(() => {
     if (textValue.password && !error.password) {
@@ -108,6 +108,7 @@ export const TextArea: FC<Props> = ({ setTextValueP, setIsDisabledP }) => {
         value={textValue.passwordCheck}
         name="passwordCheck"
         onChange={onChange}
+        onBlue={a}
         disabled={passwordDisabled}
       />
       <SimpleLabelAndTextInput

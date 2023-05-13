@@ -108,23 +108,16 @@ export const InfoTop = () => {
       <Title>会員情報</Title>
       <div className="w-9/12 m-auto">
         <div className="mt-4">
-          <Label labelClassName="" name="ユーザーアイコン画像"></Label>
+          <Label labelClassName="" name="ユーザーアイコン画像" />
         </div>
-        <TextArea
-          setTextValueP={setTextValue}
-          setIsDisabledP={setIsDisabled}
-        ></TextArea>
+        <TextArea setTextValueP={setTextValue} setIsDisabledP={setIsDisabled} />
         <FileProvider
           src={file}
           imgLabel="タップして画像を変更"
           setFile={setFile}
         />
         <div className="w-1/5 ml-auto mt-5">
-          <Button
-            onClick={onClick}
-            isDisabled={isDisabled}
-            name="登録"
-          ></Button>
+          <Button onClick={onClick} isDisabled={isDisabled} name="登録" />
         </div>
       </div>
     </div>

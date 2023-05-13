@@ -44,7 +44,7 @@ export const LoginTop = () => {
   const onClick = async () => {
     const email = dataDetail[0];
     const password = dataDetail[1];
-    const token: string = dataDetail[7];
+    const token = dataDetail[7];
 
     if (data) {
       await ApiFunction({
@@ -132,11 +132,7 @@ export const LoginTop = () => {
       <div className="w-9/12 m-auto">
         <TextArea setIsDisabledP={setIsDisabled} setTextValueP={setTextValue} />
         <div className="w-2/6 m-0 mt-9 ml-auto">
-          <Button
-            onClick={onClick}
-            isDisabled={isDisabled}
-            name="ログイン"
-          ></Button>
+          <Button onClick={onClick} isDisabled={isDisabled} name="ログイン" />
         </div>
       </div>
     </div>

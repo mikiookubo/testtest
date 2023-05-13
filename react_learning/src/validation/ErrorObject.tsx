@@ -18,15 +18,21 @@ const passwordValidation = (
   password?: string,
   passwordCheck?: string
 ) => {
-  if (!textValue) return 'パスワードを入力してください';
+  if (!textValue) {
+    return 'パスワードを入力してください';
+  }
 
-  if (passwordCheck === textValue) return '';
+  if (passwordCheck === textValue) {
+    return '';
+  }
 
   if (!errorobj.passwordCheck.test(textValue)) {
     return '正しくパスワードを入力してください';
   }
-  if (!passwordCheck) return '';
-  if (passwordCheck !== password) {
+  if (!passwordCheck) {
+    return '';
+  }
+  if (textValue !== password) {
     console.log(444);
 
     return 'パスワードが一致しません';
@@ -38,7 +44,9 @@ export const passwordCheckValidation = (
   textValue: string,
   password?: string
 ) => {
-  if (password !== textValue) return 'パスワードが一致しません';
+  if (password !== textValue) {
+    return 'パスワードが一致しません';
+  }
   if (password === textValue) {
     password = '';
   }
