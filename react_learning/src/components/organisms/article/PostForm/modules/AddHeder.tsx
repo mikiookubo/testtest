@@ -10,7 +10,6 @@ export const AddHeder: React.FC = () => {
     setOpen(!open);
   };
   const onClick = () => {
-    localStorage.removeItem('key');
     setLoginStatus(false);
   };
 
