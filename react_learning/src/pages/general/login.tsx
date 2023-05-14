@@ -19,7 +19,6 @@ export const LoginTop = () => {
   const { setLoginStatus, infoStatus } = useContext(UserIdContext);
   const { data, ApiFunction, setData } = useApi();
   const dataDetail: string[] = Object.values(data ?? {});
-
   const changeEmail = dataDetail[1];
   const infoEmail = dataDetail[0];
   const infoPasswaord = dataDetail[1];
