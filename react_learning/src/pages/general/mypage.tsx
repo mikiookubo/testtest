@@ -14,9 +14,9 @@ export const MyPage = () => {
     if (!infoStatus) {
       const userGetApi = async () => {
         await ApiFunction({
-          url: '/user',
+          url: '/login',
           config: {
-            method: 'GET',
+            method: 'get',
           },
         });
       };
@@ -38,7 +38,7 @@ export const MyPage = () => {
 
   useEffect(() => {
     const dataDetail: string[] = Object.values(data ?? {});
-    const img: string = dataDetail[3];
+    const img = dataDetail[3];
     const email = dataDetail[0];
     const changeMail = dataDetail[1];
     const changeImg = dataDetail[2];

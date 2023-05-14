@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/atoms';
 import { Title } from '../../components/atoms/Title';
 import { TextArea } from '../../components/organisms/login/TextArea';
@@ -11,11 +11,9 @@ import { useApi } from '../../utils/useApi';
 export const LoginTop = () => {
   const [access_token, setAccess_token] = useState('');
   const naviGate = useNavigate();
-  const location = useLocation();
   const valueText = { login: '', password: '' };
   const [textValue, setTextValue] = useState(valueText);
   const [isDisabled, setIsDisabled] = useState(true);
-  const pageDate = sessionStorage.getItem('page');
   const { setLoginStatus, infoStatus } = useContext(UserIdContext);
   const { data, ApiFunction, setData } = useApi();
   const dataDetail: string[] = Object.values(data ?? {});
@@ -47,7 +45,6 @@ export const LoginTop = () => {
 
   const onClick = async () => {
     const token = dataDetail[7];
-
     if (data) {
       await ApiFunction({
         url: '/login',
@@ -59,16 +56,7 @@ export const LoginTop = () => {
       });
     }
 
-    if (location.state === null && !pageDate) {
-      if (infoEmail !== textValue.login) {
-        alert('メールアドレスかパスワードが間違えています');
-        return;
-      } else if (infoPasswaord !== textValue.password) {
-        alert('メールアドレスかパスワードが間違えています');
-        return;
-      }
-    }
-    if (location.state === 'info' || !infoStatus) {
+    if (!infoStatus) {
       if (
         infoEmail !== textValue.login &&
         'okubomk0012@gmail.com' !== textValue.login
@@ -81,6 +69,14 @@ export const LoginTop = () => {
       ) {
         alert('メールアドレスかパスワードが間違えています');
         return;
+      } else if ('okubomk0012@gmail.com' === textValue.login) {
+        if ('okubomk0012@gmail.com' !== textValue.login) {
+          alert('メールアドレスかパスワードが間違えています');
+          return;
+        } else if ('kkkkkkkkkkkk9' !== textValue.password) {
+          alert('メールアドレスかパスワードが間違えています');
+          return;
+        }
       }
     }
     if (infoStatus) {
@@ -96,7 +92,7 @@ export const LoginTop = () => {
   };
 
   useEffect(() => {
-    if (!infoStatus || location.state === 'info') {
+    if (!infoStatus) {
       const userGetApi = async () => {
         await ApiFunction({
           url: '/user',
@@ -106,7 +102,7 @@ export const LoginTop = () => {
         });
       };
       userGetApi();
-    } else if (infoStatus || location.state !== 'info') {
+    } else if (infoStatus) {
       const userChangeGetApi = async () => {
         await ApiFunction({
           url: '/changeuser/',

@@ -91,6 +91,22 @@ export const handlers = [
       })
     );
   }),
+  rest.get('/login', (req, res, ctx) => {
+    return res(
+      ctx.status(200),
+      ctx.json({
+        email: data.email,
+        password: data.password,
+        name: data.name,
+        representative_image: data.representative_image,
+        user_id: data.user_id,
+        created_at: data.created_at,
+        updated_at: data.updated_at,
+        deleted_at: data.deleted_at,
+        token: data.token,
+      })
+    );
+  }),
 
   rest.post('user', (req, res, ctx) => {
     const dataBody = req.body;
