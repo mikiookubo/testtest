@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/atoms';
 import { FileProvider } from '../../components/organisms/info/FileContext';
@@ -9,6 +9,7 @@ import { paths } from '../../utils/paths';
 import { TextArea } from '../../components/organisms/info/TextArea';
 import { Heder } from '../../components/organisms/article/PostForm/modules/Heder';
 import { useApi } from '../../utils/useApi';
+import { UserIdContext } from '../../utils/useridContext';
 
 export const InfoTop = () => {
   const naviGate = useNavigate();
@@ -23,6 +24,7 @@ export const InfoTop = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [file, setFile] = useState<ArrayBuffer | string | null>(icon);
   const dataDetail: string[] = Object.values(data ?? {});
+  const { setInfoStatus } = useContext(UserIdContext);
 
   const onClick = async () => {
     const email = dataDetail[0];
@@ -85,6 +87,7 @@ export const InfoTop = () => {
     });
 
     localStorage.setItem('key', 'info');
+    setInfoStatus(false);
     naviGate(paths.loginTop, { state: 'info' });
   };
 

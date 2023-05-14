@@ -49,10 +49,16 @@ type dataType = {
   token: string;
 };
 
+type infoChangeType = {
+  name: string;
+  email: string;
+  representative_image: string;
+};
 let infoData: infoDataType;
 let articlesData: articlesDataType;
 let articlesListData: articlesListDataType;
 let data: dataType;
+let infoChange: infoChangeType;
 let articlesId;
 
 let id;
@@ -138,14 +144,24 @@ export const handlers = [
   }),
   rest.put('/user/:' + id, (req, res, ctx) => {
     const dataBody = req.body;
-    data = JSON.parse(dataBody as string);
-    infoData = JSON.parse(dataBody as string);
+    infoChange = JSON.parse(dataBody as string);
+
     return res(
       ctx.status(201),
       ctx.json({
-        name: data.name,
-        email: data.email,
-        representative_image: data.representative_image,
+        name: infoChange.name,
+        email: infoChange.email,
+        representative_image: infoChange.representative_image,
+      })
+    );
+  }),
+  rest.get('/changeuser/', (req, res, ctx) => {
+    return res(
+      ctx.status(201),
+      ctx.json({
+        name: infoChange.name,
+        email: infoChange.email,
+        representative_image: infoChange.representative_image,
       })
     );
   }),

@@ -16,14 +16,19 @@ export const LoginTop = () => {
   const [textValue, setTextValue] = useState(valueText);
   const [isDisabled, setIsDisabled] = useState(true);
   const pageDate = sessionStorage.getItem('page');
-  const { setLoginStatus } = useContext(UserIdContext);
+  const { setLoginStatus, infoStatus } = useContext(UserIdContext);
   const { data, ApiFunction, setData } = useApi();
   const dataDetail: string[] = Object.values(data ?? {});
+
+  const changeEmail = dataDetail[1];
+  const infoEmail = dataDetail[0];
+  const infoPasswaord = dataDetail[1];
 
   useEffect(() => {
     if (
       textValue.login === 'okubomk0012@gmail.com' &&
-      textValue.password === 'kkkkkkkkkkkk9'
+      textValue.password === 'kkkkkkkkkkkk9' &&
+      !infoStatus
     ) {
       setData({
         email: 'okubomk0012@gmail.com',
@@ -42,8 +47,6 @@ export const LoginTop = () => {
   }, [textValue]);
 
   const onClick = async () => {
-    const email = dataDetail[0];
-    const password = dataDetail[1];
     const token = dataDetail[7];
 
     if (data) {
@@ -58,44 +61,63 @@ export const LoginTop = () => {
     }
 
     if (location.state === null && !pageDate) {
-      if (email !== textValue.login) {
+      if (infoEmail !== textValue.login) {
         alert('メールアドレスかパスワードが間違えています');
         return;
-      } else if (password !== textValue.password) {
+      } else if (infoPasswaord !== textValue.password) {
         alert('メールアドレスかパスワードが間違えています');
         return;
       }
     }
-    if (location.state === 'info' || pageDate) {
+    if (location.state === 'info' || !infoStatus) {
       if (
-        email !== textValue.login &&
+        infoEmail !== textValue.login &&
         'okubomk0012@gmail.com' !== textValue.login
       ) {
         alert('メールアドレスかパスワードが間違えています');
         return;
       } else if (
-        password !== textValue.password &&
+        infoPasswaord !== textValue.password &&
         'kkkkkkkkkkkk9' !== textValue.password
       ) {
         alert('メールアドレスかパスワードが間違えています');
         return;
       }
     }
+    if (infoStatus) {
+      if (changeEmail !== textValue.login) {
+        alert('メールアドレスかパスワードが間違えています');
+        return;
+      }
+    }
+
     setAccess_token(token);
     setLoginStatus(true);
     naviGate(paths.myPage, { state: { id: 'ww' } });
   };
 
   useEffect(() => {
-    const userGetApi = async () => {
-      await ApiFunction({
-        url: '/user',
-        config: {
-          method: 'GET',
-        },
-      });
-    };
-    userGetApi();
+    if (!infoStatus || location.state === 'info') {
+      const userGetApi = async () => {
+        await ApiFunction({
+          url: '/user',
+          config: {
+            method: 'GET',
+          },
+        });
+      };
+      userGetApi();
+    } else if (infoStatus || location.state !== 'info') {
+      const userChangeGetApi = async () => {
+        await ApiFunction({
+          url: '/changeuser/',
+          config: {
+            method: 'get',
+          },
+        });
+      };
+      userChangeGetApi();
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

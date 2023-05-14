@@ -2,12 +2,13 @@ import { Button } from '../../components/atoms';
 import { Title } from '../../components/atoms/Title';
 import { SimpleLabelAndTextInput } from '../../components/molecules/SimpleLabelAndTextInput';
 import { FileProvider } from '../../components/organisms/info/FileContext';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { formValidate } from '../../validation/ErrorObject';
 import { paths } from '../../utils/paths';
 import { useNavigate } from 'react-router-dom';
 import { AddHeder } from '../../components/organisms/article/PostForm/modules/AddHeder';
 import { useApi } from '../../utils/useApi';
+import { UserIdContext } from '../../utils/useridContext';
 
 export const InfoChange = () => {
   type ValueFormType = {
@@ -43,6 +44,7 @@ export const InfoChange = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [error, setError] = useState(errorForm);
   const [file, setFile] = useState<ArrayBuffer | string | null>('');
+  const { setInfoStatus } = useContext(UserIdContext);
   const naviGate = useNavigate();
   const { ApiFunction, data } = useApi();
 
@@ -86,7 +88,9 @@ export const InfoChange = () => {
         },
       });
 
-      sessionStorage.setItem('page', 'change');
+      // sessionStorage.setItem('page', 'change');
+      // sessionStorage.setItem('change', 'change');
+      setInfoStatus(true);
       naviGate(paths.myPage, { state: { id: 'ww' } });
     };
 
