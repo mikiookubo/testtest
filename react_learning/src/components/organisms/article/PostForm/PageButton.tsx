@@ -36,7 +36,6 @@ export const PageArticleButton: FC<Props> = ({
           onClick={() => {
             setCurrentPage(page);
           }}
-          // disabled={page < Number(lastPage) + 1 ? false : true}
         >
           {page}
         </button>

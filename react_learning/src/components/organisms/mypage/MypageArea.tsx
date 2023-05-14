@@ -1,5 +1,4 @@
 import { FC } from 'react';
-
 import { MyPageTextInput } from '../../atoms/MypageTextInput';
 import { Icon } from '../../atoms/Icon';
 

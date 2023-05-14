@@ -1,7 +1,5 @@
 import { rest } from 'msw';
 
-// https://mswjs.io/
-// ここにinterface仕様書のAPIを作っていく
 type articlesListDataType = {
   total: string;
   per_page: string;

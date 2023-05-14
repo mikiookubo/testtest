@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/atoms';
 import { FileProvider } from '../../components/organisms/info/FileContext';
 import { Label } from '../../components/atoms/Label';
-import icon from '../../img/icon2.jpg';
+import icon from '../../img/unkown.png';
 import { Title } from '../../components/atoms/Title';
 import { paths } from '../../utils/paths';
 import { TextArea } from '../../components/organisms/info/TextArea';

@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-
 import { MyPageArea } from '../../components/organisms/mypage/MypageArea';
-
 import { AddHeder } from '../../components/organisms/article/PostForm/modules/AddHeder';
 import { useApi } from '../../utils/useApi';
+import { Title } from '../../components/atoms/Title';
 
 export const MyPage = () => {
   const [value, setValue] = useState('');
@@ -43,6 +42,7 @@ export const MyPage = () => {
   return (
     <div>
       <AddHeder />
+      <Title>マイページ</Title>
       <MyPageArea value={value} src={src}></MyPageArea>
     </div>
   );

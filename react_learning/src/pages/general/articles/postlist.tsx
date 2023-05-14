@@ -110,7 +110,6 @@ export const PostList = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageNum]);
 
-  // 次へボタンクリック処理
   const Next = () => {
     setCurrentPage((prev) => prev + 1);
 
@@ -119,7 +118,6 @@ export const PostList = () => {
     }
   };
 
-  // 前ボタンクリック処理
   const prev = () => {
     setCurrentPage(currentPage - 1);
 

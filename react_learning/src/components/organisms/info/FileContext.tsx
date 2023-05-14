@@ -34,7 +34,7 @@ export const FileProvider: React.FC<Props> = ({ imgLabel, setFile, src }) => {
   };
 
   return (
-    <div className="w-1/4 m-auto text-center">
+    <div className="w-1/4 m-auto text-center mt-5">
       <label className="inline text-sm">
         <img
           className="m-auto w-24 h-24 rounded-full"

@@ -1,7 +1,6 @@
 import { paths } from './utils/paths';
 import { Link } from 'react-router-dom';
 
-// 開発環境の時だけmswのモックサーバーが動くようにしている
 if (process.env.NODE_ENV === 'development') {
   const { worker } = require('./mocks/browser');
   worker.start();

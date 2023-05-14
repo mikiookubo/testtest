@@ -105,20 +105,22 @@ export const InfoChange = () => {
     <div>
       <AddHeder />
       <Title>会員情報</Title>
-      <SimpleLabelAndTextInput
-        labelTitle="ログインID (メールアドレス)"
-        ErrorMessage={error.email}
-        value={textValue.email}
-        name="email"
-        onChange={onChange}
-      />
-      <SimpleLabelAndTextInput
-        labelTitle="ニックネーム(8文字以上)"
-        ErrorMessage={error.name}
-        value={textValue.name}
-        name="name"
-        onChange={onChange}
-      />
+      <div className="w-9/12 m-auto">
+        <SimpleLabelAndTextInput
+          labelTitle="ログインID (メールアドレス)"
+          ErrorMessage={error.email}
+          value={textValue.email}
+          name="email"
+          onChange={onChange}
+        />
+        <SimpleLabelAndTextInput
+          labelTitle="ニックネーム(8文字以上)"
+          ErrorMessage={error.name}
+          value={textValue.name}
+          name="name"
+          onChange={onChange}
+        />
+      </div>
       <FileProvider
         src={file + ''}
         imgLabel="タップして画像を変更"

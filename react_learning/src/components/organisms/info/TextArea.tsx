@@ -1,7 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { SimpleLabelAndTextInput } from '../../molecules/SimpleLabelAndTextInput';
 import { formValidate } from '../../../validation/ErrorObject';
-
 import React from 'react';
 
 const errorForm = {
@@ -51,7 +50,7 @@ export const TextArea: FC<Props> = ({ setTextValueP, setIsDisabledP }) => {
       ),
     }));
   };
-  const a = () => {
+  const errorMsgDelete = () => {
     if (!textValue.passwordCheck) {
       return;
     }
@@ -97,7 +96,7 @@ export const TextArea: FC<Props> = ({ setTextValueP, setIsDisabledP }) => {
         value={textValue.password}
         name="password"
         onChange={onChange}
-        onBlue={a}
+        onBlue={errorMsgDelete}
       />
       <SimpleLabelAndTextInput
         labelTitle="パスワード確認"
@@ -105,7 +104,7 @@ export const TextArea: FC<Props> = ({ setTextValueP, setIsDisabledP }) => {
         value={textValue.passwordCheck}
         name="passwordCheck"
         onChange={onChange}
-        onBlue={a}
+        onBlue={errorMsgDelete}
         disabled={passwordDisabled}
       />
       <SimpleLabelAndTextInput

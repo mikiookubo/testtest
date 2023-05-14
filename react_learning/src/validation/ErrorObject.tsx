@@ -48,9 +48,6 @@ export const passwordCheckValidation = (
   if (password === textValue) {
     password = '';
   }
-
-  // if (!errorobj.passwordCheck.test(password))
-  //   return '正しくパスワードを入力してください';
 };
 const nameValidation = (name: string) => {
   if (!name) return '名前を入力してください';
