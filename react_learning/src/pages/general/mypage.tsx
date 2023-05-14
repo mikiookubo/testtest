@@ -35,7 +35,6 @@ export const MyPage = () => {
       } else {
         setSrc(img);
       }
-      console.log(img);
 
       setValue(email);
     }

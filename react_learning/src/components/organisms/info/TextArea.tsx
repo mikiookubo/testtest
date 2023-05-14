@@ -1,9 +1,6 @@
 import { FC, useEffect, useState } from 'react';
 import { SimpleLabelAndTextInput } from '../../molecules/SimpleLabelAndTextInput';
-import {
-  formValidate,
-  passwordCheckValidation,
-} from '../../../validation/ErrorObject';
+import { formValidate } from '../../../validation/ErrorObject';
 
 import React from 'react';
 

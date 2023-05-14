@@ -59,6 +59,7 @@ export const PostForm: React.FC = () => {
         type: 'showErrorMessage',
       });
     }
+
     if (
       title.errorMessage !== undefined ||
       description.errorMessage !== undefined
@@ -71,7 +72,7 @@ export const PostForm: React.FC = () => {
       article_id: userId,
       created_at: dateRequest,
     };
-    const te = async () => {
+    const addApi = async () => {
       await ApiFunction({
         url: '/articles',
         config: {
@@ -80,7 +81,7 @@ export const PostForm: React.FC = () => {
         },
       });
     };
-    te();
+    addApi();
 
     navigate(paths.articles.detail(userId + ''), { state: 'add' });
 

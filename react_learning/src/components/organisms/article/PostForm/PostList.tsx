@@ -24,7 +24,10 @@ export const ArticlesList: FC<articlesType> = ({ articleList }) => {
         for (let i = 0; i < 20; i++) {
           list.push(
             <tr>
-              <td className="border-black border border-solid w-1/4 h-6">
+              <td
+                className="border-black border border-solid w-1/4 h-6"
+                key={articleList ? articleList[i]?.article_id : ''}
+              >
                 {articleList ? articleList[i]?.title : ''}
               </td>
 

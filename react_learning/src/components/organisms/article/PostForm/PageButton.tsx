@@ -31,6 +31,7 @@ export const PageArticleButton: FC<Props> = ({
       </button>
       {pages.map((page) => (
         <button
+          key={page}
           className="w-8 border border-gray-400 border-solid ml-2.5"
           onClick={() => {
             setCurrentPage(page);

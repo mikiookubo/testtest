@@ -21,7 +21,7 @@ export const InfoTop = () => {
   const { ApiFunction, data } = useApi();
   const [textValue, setTextValue] = useState(valueForm);
   const [isDisabled, setIsDisabled] = useState(true);
-  const [file, setFile] = useState<string>(icon);
+  const [file, setFile] = useState<ArrayBuffer | string | null>(icon);
   const dataDetail: string[] = Object.values(data ?? {});
 
   const onClick = async () => {
@@ -38,14 +38,13 @@ export const InfoTop = () => {
       alert('既に存在しているアカウントです');
       return;
     }
-    const fileData = file.replace(/^data:\w+\/\w+;base64,/, '');
+    const fileData = file + ''?.replace(/^data:\w+\/\w+;base64,/, '');
     let chars = 'abcdefghijklmnopqrstuvwxyz0123456789-';
     let user_id = '';
     for (let i = 0; i < 35; i++) {
       user_id += chars.charAt(Math.floor(Math.random() * chars.length));
     }
-    console.log(file);
-    console.log(fileData);
+
     const date = new Date();
     const dateRequest =
       date.getFullYear() +
@@ -112,7 +111,7 @@ export const InfoTop = () => {
         </div>
         <TextArea setTextValueP={setTextValue} setIsDisabledP={setIsDisabled} />
         <FileProvider
-          src={file}
+          src={file + ''}
           imgLabel="タップして画像を変更"
           setFile={setFile}
         />

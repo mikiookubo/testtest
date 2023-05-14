@@ -105,9 +105,9 @@ export const LoginTop = () => {
     const nowDate = Math.floor(date.getTime() / 1000);
     const expire = nowDate + 3600;
     // オブジェクト値をJSON文字列に変換してStorageに保存
-    const p = { access_token: access_token, age: expire };
+    const storage = { access_token: access_token, age: expire };
 
-    localStorage.setItem('key', JSON.stringify(p));
+    localStorage.setItem('key', JSON.stringify(storage));
     const time = JSON.parse(localStorage.getItem('key') as string).age;
 
     // 保存期間の値が保存されている場合

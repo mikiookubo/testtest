@@ -1,12 +1,12 @@
 type Props = {
   src: string;
   imgLabel: string;
-  setFile: (isState: string) => void;
+  setFile: (isState: ArrayBuffer | string | null) => void;
 };
 
 export const FileProvider: React.FC<Props> = ({ imgLabel, setFile, src }) => {
   const OnChangeFile = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const reader: any = new FileReader();
+    const reader: string | FileReader = new FileReader();
 
     if (e.currentTarget.files !== null) {
       const files = e.currentTarget.files[0];
@@ -28,10 +28,8 @@ export const FileProvider: React.FC<Props> = ({ imgLabel, setFile, src }) => {
       reader.readAsDataURL(files);
 
       reader.onload = () => {
-        setFile(reader.result);
+        setFile(reader?.result);
       };
-
-      setFile(files.name);
     }
   };
 

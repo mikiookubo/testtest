@@ -42,7 +42,7 @@ export const InfoChange = () => {
   const [textValue, setTextValue] = useState<ValueFormType>(valueForm);
   const [isDisabled, setIsDisabled] = useState(true);
   const [error, setError] = useState(errorForm);
-  const [file, setFile] = useState<string>('');
+  const [file, setFile] = useState<ArrayBuffer | string | null>('');
   const naviGate = useNavigate();
   const { ApiFunction, data } = useApi();
 
@@ -69,7 +69,7 @@ export const InfoChange = () => {
   }, [data]);
   const onClick = () => {
     const userId = localStorage.getItem('useId');
-    const fileData = file.replace(/^data:\w+\/\w+;base64,/, '');
+    const fileData = file + ''?.replace(/^data:\w+\/\w+;base64,/, '');
 
     const request = {
       name: textValue.name,
@@ -120,7 +120,7 @@ export const InfoChange = () => {
         onChange={onChange}
       />
       <FileProvider
-        src={file}
+        src={file + ''}
         imgLabel="タップして画像を変更"
         setFile={setFile}
       />

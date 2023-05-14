@@ -14,16 +14,13 @@ type state = {
 };
 
 export const Detail: React.FC = () => {
-  const { setInfoStatus, userId, setArticles, articles } =
-    useContext(UserIdContext);
+  const { userId, setArticles, articles } = useContext(UserIdContext);
   const [name, setName] = useState('');
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const location = useLocation();
   const state = location.state as state;
   const { data, ApiFunction } = useApi();
-
-  setInfoStatus(true);
 
   useEffect(() => {
     const detailApi = async () => {
@@ -34,7 +31,7 @@ export const Detail: React.FC = () => {
         },
       });
     };
-    if (state.page === 'add') {
+    if (location.state === 'add') {
       detailApi();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,7 +43,7 @@ export const Detail: React.FC = () => {
     const Api = async () => {
       setName(String(dataDetail[2]));
     };
-    if (state.page === 'add') {
+    if (location.state === 'add') {
       Api();
     }
 

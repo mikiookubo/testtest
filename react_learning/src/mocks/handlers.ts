@@ -2,14 +2,61 @@ import { rest } from 'msw';
 
 // https://mswjs.io/
 // ここにinterface仕様書のAPIを作っていく
+type articlesListDataType = {
+  total: string;
+  per_page: string;
+  current_page: string;
+  last_page: string;
+  first_page_url: string;
+  last_page_url: string;
+  next_page_url: string;
+  prev_page_url: string;
+  path: string;
+  from: string;
+  to: string;
+  data: string;
+};
 
-let infoData: any;
+type infoDataType = {
+  email: string;
+  password: string;
+  name: string;
+  representative_image: string;
+  user_id: string;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string;
+  token: string;
+};
 
-let articlesData: any;
-let articlesDate: any;
+type articlesDataType = {
+  title: string;
+  content: string;
+  user_name: string;
+  article_id: string;
+  created_at: string;
+  updated_at: string;
+};
+type dataType = {
+  name: string;
+  email: string;
+  representative_image: string;
+
+  password: string;
+
+  user_id: string;
+  created_at: string;
+  updated_at: string;
+  deleted_at: string;
+  token: string;
+};
+
+let infoData: infoDataType;
+let articlesData: articlesDataType;
+let articlesListData: articlesListDataType;
+let data: dataType;
 let articlesId;
 
-let data: any;
 let id;
 let reqData;
 
@@ -62,8 +109,7 @@ export const handlers = [
   }),
 
   rest.get('user', (req, res, ctx) => {
-    const key = localStorage.getItem('key');
-    if (!key || !infoData) {
+    if (!infoData) {
       return;
     }
     return res(
@@ -139,23 +185,23 @@ export const handlers = [
 
   rest.post('/articlelist/', (req, res, ctx) => {
     const reqDate = req.body;
-    articlesDate = JSON.parse(reqDate as string);
+    articlesListData = JSON.parse(reqDate as string);
 
     return res(
       ctx.status(201),
       ctx.json({
-        total: articlesDate.total,
-        per_page: articlesDate.per_page,
-        current_page: articlesDate.current_page,
-        last_page: articlesDate.last_page,
-        first_page_url: articlesDate.first_page_url,
-        last_page_url: articlesDate.last_page_url,
-        next_page_url: articlesDate.next_page_url,
-        prev_page_url: articlesDate.prev_page_url,
-        path: articlesDate.path,
-        from: articlesDate.from,
-        to: articlesDate.to,
-        data: articlesDate.data,
+        total: articlesListData.total,
+        per_page: articlesListData.per_page,
+        current_page: articlesListData.current_page,
+        last_page: articlesListData.last_page,
+        first_page_url: articlesListData.first_page_url,
+        last_page_url: articlesListData.last_page_url,
+        next_page_url: articlesListData.next_page_url,
+        prev_page_url: articlesListData.prev_page_url,
+        path: articlesListData.path,
+        from: articlesListData.from,
+        to: articlesListData.to,
+        data: articlesListData.data,
       })
     );
   }),
@@ -163,18 +209,18 @@ export const handlers = [
     return res(
       ctx.status(201),
       ctx.json({
-        total: articlesDate.total,
-        per_page: articlesDate.per_page,
-        current_page: articlesDate.current_page,
-        last_page: articlesDate.last_page,
-        first_page_url: articlesDate.first_page_url,
-        last_page_url: articlesDate.last_page_url,
-        next_page_url: articlesDate.next_page_url,
-        prev_page_url: articlesDate.prev_page_url,
-        path: articlesDate.path,
-        from: articlesDate.from,
-        to: articlesDate.to,
-        data: articlesDate.data,
+        total: articlesListData.total,
+        per_page: articlesListData.per_page,
+        current_page: articlesListData.current_page,
+        last_page: articlesListData.last_page,
+        first_page_url: articlesListData.first_page_url,
+        last_page_url: articlesListData.last_page_url,
+        next_page_url: articlesListData.next_page_url,
+        prev_page_url: articlesListData.prev_page_url,
+        path: articlesListData.path,
+        from: articlesListData.from,
+        to: articlesListData.to,
+        data: articlesListData.data,
       })
     );
   }),

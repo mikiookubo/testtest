@@ -33,8 +33,6 @@ const passwordValidation = (
     return '';
   }
   if (textValue !== password) {
-    console.log(444);
-
     return 'パスワードが一致しません';
   } else {
   }
