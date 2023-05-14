@@ -4,7 +4,7 @@ import { paths } from '../../../../utils/paths';
 import { Button } from '../../../atoms';
 import { LabelAndTextInput, LabelAndTextArea } from '../../../molecules';
 import { reducer } from './modules/reducer';
-import { InputForm } from './modules/types';
+import type { InputForm } from './modules/types';
 import { UserIdContext } from '../../../../utils/useridContext';
 import { useApi } from '../../../../utils/useApi';
 
