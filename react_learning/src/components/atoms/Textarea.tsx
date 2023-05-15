@@ -13,7 +13,7 @@ export const Textarea: React.FC<Props> = ({ value, placeholder, onChange }) => {
       value={value}
       placeholder={placeholder}
       onChange={(e) => {
-        onChange(e.target.value);
+      onChange(e.target.value);
       }}
     />
   );

@@ -14,7 +14,6 @@ export const PageArticleButton: FC<Props> = ({
   setCurrentPage,
   prevOnClick,
   prevDisabled,
-  lastPage,
   nextOnClick,
   nextDisabled,
 }) => {

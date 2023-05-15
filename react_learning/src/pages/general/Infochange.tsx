@@ -14,7 +14,7 @@ export const InfoChange = () => {
   type ValueFormType = {
     name: string;
     email: string;
-    representative_image: string; //base64対応必須
+    representative_image: string;
   };
   const valueForm = {
     email: '',
@@ -87,9 +87,6 @@ export const InfoChange = () => {
           body: JSON.stringify(request),
         },
       });
-
-      // sessionStorage.setItem('page', 'change');
-      // sessionStorage.setItem('change', 'change');
       setInfoStatus(true);
       naviGate(paths.myPage, { state: { id: 'ww' } });
     };
