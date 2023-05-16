@@ -10,7 +10,7 @@ type Props = {
 export const MyPageArea: FC<Props> = ({ src, value }) => {
   return (
     <div className="flex justify-center">
-      <Icon src={src}></Icon>
+      <Icon src={src} />
       <MyPageTextInput value={value} />
     </div>
   );

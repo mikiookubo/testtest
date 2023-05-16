@@ -45,8 +45,7 @@ export const AddHeder: React.FC = () => {
               src={logo}
               alt="ロゴ"
               className="w-14 absolute top-0 m-auto sm:inset-x-0 "
-              onClick={() => {}}
-            ></img>
+            />
           </Link>
         </div>
         <nav className={'sm:h-56 ' + (open ? 'sm:block' : 'sm:hidden')}>

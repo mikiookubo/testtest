@@ -128,7 +128,7 @@ export const InfoChange = () => {
         setFile={setFile}
       />
       <div className="w-1/5 ml-auto mt-5">
-        <Button onClick={onClick} isDisabled={isDisabled} name="登録"></Button>
+        <Button onClick={onClick} isDisabled={isDisabled} name="登録" />
       </div>
     </div>
   );

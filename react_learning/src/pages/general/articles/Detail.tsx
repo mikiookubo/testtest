@@ -40,12 +40,7 @@ export const Detail: React.FC = () => {
   const dataDetail: string[] = Object.values(data ?? {});
 
   useEffect(() => {
-    const Api = async () => {
-      setName(String(dataDetail[2]));
-    };
-    if (location.state === 'add') {
-      Api();
-    }
+    // const Api = async () => {
 
     setName(dataDetail[2]);
     setTitle(dataDetail[0]);
@@ -81,7 +76,7 @@ export const Detail: React.FC = () => {
       <AddHeder />
       <Title>詳細画面</Title>
       <div className="w-9/12 m-auto">
-        <DetailArea name={name} title={title} content={content}></DetailArea>
+        <DetailArea name={name} title={title} content={content} />
       </div>
     </div>
   );

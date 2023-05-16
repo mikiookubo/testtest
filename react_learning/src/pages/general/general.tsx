@@ -2,13 +2,6 @@ import { TopPageButtonAndButton } from '../../components/molecules/ToppageButton
 import React from 'react';
 import { Heder } from '../../components/organisms/article/PostForm/modules/Heder';
 
-type Props = {
-  count: number;
-  setCount: React.Dispatch<React.SetStateAction<number>>;
-};
-
-export const LoginAp = React.createContext({} as Props);
-
 export const General: React.FC = () => {
   return (
     <div className="App">

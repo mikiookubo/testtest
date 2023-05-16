@@ -72,7 +72,7 @@ export const MyPage = () => {
     <div>
       <AddHeder />
       <Title>マイページ</Title>
-      <MyPageArea value={value} src={src}></MyPageArea>
+      <MyPageArea value={value} src={src} />
     </div>
   );
 };

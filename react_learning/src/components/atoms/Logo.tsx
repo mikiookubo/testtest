@@ -11,7 +11,7 @@ export const Logo: React.FC = () => {
           src={logo}
           alt="logo"
           className="w-14 absolute top-0 inset-x-0 m-auto"
-        ></img>
+        />
       </Link>
     </div>
   );
