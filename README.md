@@ -1,5 +1,7 @@
 # html-css-js-curriculum
 
+aaa
+
 ## 課題を実施する前に下記内容を確認する
 
 - [ディレクトリが作成されているか](https://www.notion.so/alchemy-inc/d39c7c0e8dce4ddfa049a1ea99e1e29f)
